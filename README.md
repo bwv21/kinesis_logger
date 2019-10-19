@@ -14,7 +14,7 @@
 + [Logger](/src/KLoggerSuite/KLogger/)
   + 현재 C# 으로만 구현되어 있다
   + 백그라운드 스레드에서 로그를 묶어서 Kinesis 로 보낸다
-    + 로그를 바로 보내는 것 보다 배치로 Kinesis 에 전송하는 것이 성능에 도움이 된다
+    + 로그를 바로 보내는 것 보다 배치로 전송하는 것이 성능에 도움이 된다
     + [Batch API](https://docs.aws.amazon.com/ko_kr/kinesis/latest/APIReference/API_PutRecords.html) 를 사용한다
   + 로그가 일정 크기 이상이면 압축을 한다
     + 압축 기능을 사용하려면 압축을 해제할 Preprocessor 가 필요하다
