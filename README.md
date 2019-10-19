@@ -9,7 +9,7 @@
 ## 요약
 
 + JSON
-  + i. 로그는 JSON 형태로 가공한다
+  + 로그는 JSON 형태로 가공한다
   + 데이터(Record, Row)의 단위는 줄바꿈(\n)으로 한다
 + [Logger](/src/KLoggerSuite/KLogger/)
   + C# 으로만 구현되어 있다
