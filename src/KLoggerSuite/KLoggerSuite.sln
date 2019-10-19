@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.705
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29409.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KLogger", "KLogger\KLogger.csproj", "{C2EBD5FD-01E2-496C-9A60-3EBB5FF9A434}"
 EndProject
@@ -10,8 +10,6 @@ EndProject
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "klogger_preprocessor", "klogger_preprocessor\klogger_preprocessor.njsproj", "{93A99353-34B5-47FA-87C9-63D274E18909}"
 EndProject
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "klogger_merge_s3", "klogger_merge_s3\klogger_merge_s3.njsproj", "{DAD94EF1-A743-4A02-8FC5-3102565A614A}"
-EndProject
-Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "klogger_lambda_example", "klogger_lambda_example\klogger_lambda_example.njsproj", "{C611841D-1605-4364-B55A-FEDD6FE1E4BC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KLoggerTests", "KLoggerTests\KLoggerTests.csproj", "{3B199265-0C1C-468B-8E35-8F2535884FAC}"
 EndProject
@@ -37,10 +35,6 @@ Global
 		{DAD94EF1-A743-4A02-8FC5-3102565A614A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DAD94EF1-A743-4A02-8FC5-3102565A614A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DAD94EF1-A743-4A02-8FC5-3102565A614A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C611841D-1605-4364-B55A-FEDD6FE1E4BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C611841D-1605-4364-B55A-FEDD6FE1E4BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C611841D-1605-4364-B55A-FEDD6FE1E4BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C611841D-1605-4364-B55A-FEDD6FE1E4BC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3B199265-0C1C-468B-8E35-8F2535884FAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3B199265-0C1C-468B-8E35-8F2535884FAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B199265-0C1C-468B-8E35-8F2535884FAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
