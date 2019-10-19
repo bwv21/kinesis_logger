@@ -1,0 +1,13 @@
+{
+  "name": "klogger_preprocessor",
+  "version": "0.0.0",
+  "description": "klogger preprocessor source code.",
+  "main": "app.js",
+  "author": {
+    "name": "bwv21"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.525.0",
+    "zlib": "^1.0.5"
+  }
+}

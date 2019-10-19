@@ -1,0 +1,24 @@
+﻿{
+  "ID": "로거의 식별 아이디",
+  "AWSs": {
+    "Region": "ap-northeast-2",
+    "KEK": "key encryption key",
+    "AccessID": "AWS 의 AccessID 를 KLoggerEncryptKey 프로그램으로 KEK 를 사용하여 암호화",
+    "SecretKey": "AWS 의 SecretKey 를 KLoggerEncryptKey 프로그램으로 KEK 를 사용하여 암호화한 결과",
+    "KinesisStreamName": "키네시스의 스트림 이름"
+  },
+  "SlackConfigs": {
+    "NamePrefix": "보내는 이름 접미사",
+    "WebhookUrl": "웹훅 URL",
+    "DebugChannel": "채널명",
+    "InfoChannel": "채널명",
+    "WarnChannel": "채널명",
+    "ErrorChannel": "채널명",
+    "FatalChannel": "채널명"
+  },
+  "ReporterType_예시1": "None",
+  "ReporterType_예시2": "Debug",
+  "ReporterType_예시3": "Console",
+  "ReporterType": "Slack",
+  "ReportLevel": "DEBUG"
+}

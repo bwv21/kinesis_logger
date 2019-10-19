@@ -1,0 +1,12 @@
+{
+  "name": "klogger_merge_s3",
+  "version": "0.0.0",
+  "description": "klogger merge s3 source code.",
+  "main": "app.js",
+  "author": {
+    "name": "bwv21"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.489.0"
+  }
+}

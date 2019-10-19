@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C2EBD5FD-01E2-496C-9A60-3EBB5FF9A434}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>KLogger</RootNamespace>
+    <AssemblyName>KLogger</AssemblyName>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>KLogger.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>KLogger.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Configs\Const.cs" />
+    <Compile Include="Libs\Extensions.cs" />
+    <Compile Include="Cores\Components\CompletePutNotifier.cs" />
+    <Compile Include="Cores\Components\ThroughputController.cs" />
+    <Compile Include="Cores\Loggers\Logger.04_Push.cs" />
+    <Compile Include="Cores\Loggers\Logger.06_ConfigChange.cs" />
+    <Compile Include="Cores\Components\PutLog.cs" />
+    <Compile Include="Libs\AWS\Kinesis\BaseKinesisAPI.cs" />
+    <Compile Include="Libs\AWS\Kinesis\Describe\DescribeStreamAPI.cs" />
+    <Compile Include="Libs\AWS\Kinesis\Describe\ResponseDescribeStreamSummary.cs" />
+    <Compile Include="Libs\AWS\Kinesis\Describe\StreamDescriptionSummary.cs" />
+    <Compile Include="Libs\Reporters\ConsoleReporter.cs" />
+    <Compile Include="Libs\DebugLog.cs" />
+    <Compile Include="Libs\PlainJsonStringConverter.cs" />
+    <Compile Include="Libs\Reporters\DebugReporter.cs" />
+    <Compile Include="Libs\Reporters\SilenceReporter.cs" />
+    <Compile Include="Libs\SlackWebhook.cs" />
+    <Compile Include="Libs\Statistics.cs" />
+    <Compile Include="Libs\AWS\Kinesis\Put\PutAPI.cs" />
+    <Compile Include="Libs\ErrorCounter.cs" />
+    <Compile Include="Libs\AWS\Kinesis\Put\PutRecord.cs" />
+    <Compile Include="Libs\AWS\Kinesis\Put\Record.cs" />
+    <Compile Include="Cores\Exceptions\LoggerException.cs" />
+    <Compile Include="Cores\Exceptions\LoggerStartException.cs" />
+    <Compile Include="Cores\Loggers\Logger.05_StateChange.cs" />
+    <Compile Include="Cores\Loggers\Logger.00_Member.cs" />
+    <Compile Include="Cores\Loggers\Logger.02_Stop.cs" />
+    <Compile Include="Cores\Loggers\Logger.03_Tick.cs" />
+    <Compile Include="Cores\Components\PutData.cs" />
+    <Compile Include="Cores\Components\Putter.cs" />
+    <Compile Include="Cores\Components\Log.cs" />
+    <Compile Include="Cores\Loggers\Logger._.cs" />
+    <Compile Include="Cores\Components\Watcher.cs" />
+    <Compile Include="Libs\QueueMT.cs" />
+    <Compile Include="Cores\Components\PutContext.cs" />
+    <Compile Include="Libs\_ForInternalVisiableTo.cs" />
+    <Compile Include="Types\CompletePut.cs" />
+    <Compile Include="Types\ILog.cs" />
+    <Compile Include="Types\StringLogObject.cs" />
+    <Compile Include="Types\Types.cs" />
+    <Compile Include="Libs\Reporters\SlackReporter.cs" />
+    <Compile Include="Libs\Reporters\Reporter.cs" />
+    <Compile Include="Configs\Config.cs" />
+    <Compile Include="Cores\Loggers\Logger.01_Start.cs" />
+    <Compile Include="Libs\NaiveLoopThread.cs" />
+    <Compile Include="Libs\JsonSerializer.cs" />
+    <Compile Include="Libs\Rand.cs" />
+    <Compile Include="Libs\SequenceGenerator.cs" />
+    <Compile Include="Libs\SimpleAES.cs" />
+    <Compile Include="Libs\StringCompressor.cs" />
+    <Compile Include="Libs\Now.cs" />
+    <Compile Include="Libs\AWS\Auth\AWS4SignerBase.cs" />
+    <Compile Include="Libs\AWS\Auth\AWS4SignerForPOST.cs" />
+    <Compile Include="Libs\AWS\PostUtil.cs" />
+    <Compile Include="Libs\AWS\Kinesis\Put\PutRecords.cs" />
+    <Compile Include="Libs\AWS\Kinesis\Put\ResponsePutRecords.cs" />
+    <Compile Include="KLoggerAPI.cs" />
+    <Compile Include="Cores\Components\LogEncoder.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\VersionInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="KLogger.ruleset" />
+    <None Include="KLoggerConfig_Template.json" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>powershell -ExecutionPolicy ByPass -File $(ProjectDir)\BuildScript\InjectGitVersion.ps1 $(ProjectDir)</PreBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets. -->
+  <Target Name="BeforeBuild">
+    <Version VersionFile="Properties\version.txt" Major="0" Minor="1" BuildType="Automatic" StartDate="12/31/2009" RevisionType="BuildIncrement">
+      <Output TaskParameter="Major" PropertyName="Major" />
+      <Output TaskParameter="Minor" PropertyName="Minor" />
+      <Output TaskParameter="Build" PropertyName="Build" />
+      <Output TaskParameter="Revision" PropertyName="Revision" />
+    </Version>
+    <AssemblyInfo CodeLanguage="CS" OutputFile="Properties\VersionInfo.cs" AssemblyVersion="$(Major).$(Minor).$(Build).$(Revision)" AssemblyFileVersion="$(Major).$(Minor).$(Build).$(Revision)" />
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  <PropertyGroup>
+    <PostBuildEvent>COPY /Y $(ProjectDir)\Properties\version.txt $(TargetDir)
+COPY /Y $(ProjectDir)\Properties\git_hash.txt $(TargetDir)</PostBuildEvent>
+  </PropertyGroup>
+  <Import Project="..\packages\MSBuildTasks.1.5.0.235\build\MSBuildTasks.targets" Condition="Exists('..\packages\MSBuildTasks.1.5.0.235\build\MSBuildTasks.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>이 프로젝트는 이 컴퓨터에 없는 NuGet 패키지를 참조합니다. 해당 패키지를 다운로드하려면 NuGet 패키지 복원을 사용하십시오. 자세한 내용은 http://go.microsoft.com/fwlink/?LinkID=322105를 참조하십시오. 누락된 파일은 {0}입니다.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\MSBuildTasks.1.5.0.235\build\MSBuildTasks.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MSBuildTasks.1.5.0.235\build\MSBuildTasks.targets'))" />
+  </Target>
+</Project>
