@@ -34,8 +34,8 @@ loggerAPI.Push("string_type", "this is log text....");
 ## JSON 문자열 로그
 
 ```csharp
-loggerAPI.Push("json_string", @"{
-                                    ""ValueInt"": 42,
-                                    ""ValueString"" : ""42""
-                                }");
+loggerAPI.PushJsonString("json_string", @"{
+                                              ""ValueInt"": 42,
+                                              ""ValueString"" : ""42""
+                                          }");
 ```
