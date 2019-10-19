@@ -19,7 +19,7 @@ loggerAPI.Push("anonymous_type",
 var log = new Log
 {
     ValueInt = 42,
-    ValueString = 42
+    ValueString = "42"
 };
 
 loggerAPI.Push("instance_type", log);
