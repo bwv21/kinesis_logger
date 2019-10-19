@@ -66,21 +66,3 @@ namespace KLoggerEncryptKey
         }
     }
 }
-
-/*
-             KLoggerAPI api = new KLoggerAPI(@"..\\..\\KLoggerConfigTest.json", null);
-
-            api.Start();
-
-            for (Int32 i = 0; i < 3000; ++i)
-            {
-                Object logObject = new
-                                   {
-                                       ValueInt = i,
-                                       ValueString = Rand.RandString(Rand.RandInt32(1, 1000))
-                                   };
-
-                api.Push("test", logObject);
-            }
-
-*/

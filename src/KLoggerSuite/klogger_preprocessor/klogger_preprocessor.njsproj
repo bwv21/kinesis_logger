@@ -36,9 +36,6 @@
     <Compile Include="app.js">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="backup.js">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="_testdriver.js">
       <SubType>Code</SubType>
     </Compile>
