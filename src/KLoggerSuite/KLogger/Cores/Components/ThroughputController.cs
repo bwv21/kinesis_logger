@@ -83,7 +83,7 @@ namespace KLogger.Cores.Components
             newByteCapacity = Math.Min(newByteCapacity, maxByteCapacity);
             newRecordCapacity = Math.Min(newRecordCapacity, maxRecordCapacity);
 
-            DebugLog.Log($"OutsideUseCapacity({useByteCapacity}, {useRecordCapacity}: {_byteCapacity} -> {newByteCapacity}, {_recordCapacity} -> {newRecordCapacity}", "klogger:throughput-control");
+            DebugLog.Log($"{nameof(UseCapacity)}({useByteCapacity}, {useRecordCapacity}: {_byteCapacity} -> {newByteCapacity}, {_recordCapacity} -> {newRecordCapacity}", "klogger:throughput-control");
 
             Interlocked.Exchange(ref _byteCapacity, newByteCapacity);
             Interlocked.Exchange(ref _recordCapacity, newRecordCapacity);
@@ -173,7 +173,7 @@ namespace KLogger.Cores.Components
             Int64 newByteCapacity = CalculateByteCapacity(elapsedMS, _shardCount);
             Int32 newRecordCapacity = CalculateRecordCapacity(elapsedMS, _shardCount);
 
-            DebugLog.Log($"GainCapacity({elapsedMS}ms): {_byteCapacity} -> {newByteCapacity}, {_recordCapacity} -> {newRecordCapacity}", "klogger:throughput-control");
+            DebugLog.Log($"{nameof(GainCapacity)}({elapsedMS}ms): {_byteCapacity} -> {newByteCapacity}, {_recordCapacity} -> {newRecordCapacity}", "klogger:throughput-control");
 
             Interlocked.Exchange(ref _byteCapacity, newByteCapacity);
             Interlocked.Exchange(ref _recordCapacity, newRecordCapacity);
