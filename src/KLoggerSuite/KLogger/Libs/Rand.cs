@@ -50,7 +50,6 @@ namespace KLogger.Libs
 
                         foreach (PerformanceCounter performanceCounter in category.GetCounters("_Total"))
                         {
-
                             if (performanceCounter.RawValue == 0)
                             {
                                 seed += performanceCounter.RawValue;
