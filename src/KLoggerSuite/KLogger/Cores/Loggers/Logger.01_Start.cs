@@ -48,11 +48,12 @@ namespace KLogger.Cores.Loggers
 
                 GenerateInstanceID();
 
-                InitializeSequenceGenerator();
-                InitializeLogQueue();
-                InitializeIgnoreLogTypes();
-                InitializeReporter();
-                InitializeErrorCounter();
+                CreateSequenceGenerator();
+                CreateLogQueue();
+                CreateIgnoreLogTypes();
+                CreateReporter();
+                CreateErrorCounter();
+
                 InitializeWatcher();
                 InitializeCompletePutNotifier();
                 InitializeLogEncoder();
@@ -62,6 +63,7 @@ namespace KLogger.Cores.Loggers
                 StartWatcher();
                 StartCompletePutNotifier();
                 StartThroughputController();
+
                 CreateAndStartTickThread();
 
                 _lastWorkTimeMS = Now.TimestampMS(StartTime);
@@ -82,23 +84,23 @@ namespace KLogger.Cores.Loggers
             InstanceID = Rand.RandString(13) + Rand.RandInt32(0, 10).ToString() + Rand.RandInt32(0, 10).ToString() + Rand.RandInt32(0, 10).ToString();
         }
 
-        private void InitializeSequenceGenerator()
+        private void CreateSequenceGenerator()
         {
             _sequenceGenerator = new SequenceGenerator(Now.TimestampSec(StartTime));
         }
 
-        private void InitializeLogQueue()
+        private void CreateLogQueue()
         {
             _logQueue = new QueueMT<Log>(Config.MaxLogQueueSize);
         }
 
-        private void InitializeIgnoreLogTypes()
+        private void CreateIgnoreLogTypes()
         {
             IgnoreLogTypes = new HashSet<String>(Config.IgnoreLogTypes);
             UseIgnoreLogType = Config.UseIgnoreLogType == 1;
         }
 
-        private void InitializeReporter()
+        private void CreateReporter()
         {
             if (Config.ReporterType == ReporterType.None ||
                 Config.ReporterType == ReporterType.InvalidMin ||
@@ -146,7 +148,7 @@ namespace KLogger.Cores.Loggers
             return userName;
         }
 
-        private void InitializeErrorCounter()
+        private void CreateErrorCounter()
         {
             if (Reporter == null)
             {
