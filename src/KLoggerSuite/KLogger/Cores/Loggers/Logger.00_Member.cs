@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using KLogger.Configs;
 using KLogger.Cores.Components;
+using KLogger.Cores.Structures;
 using KLogger.Libs;
 using KLogger.Libs.Reporters;
 using KLogger.Types;
@@ -22,7 +23,7 @@ namespace KLogger.Cores.Loggers
         private readonly Object _lock = new Object();
         private readonly Object _tickLock = new Object();
         private readonly List<NaiveLoopThread> _loggerThreads = new List<NaiveLoopThread>();
-        
+
         private Int64 _lastWorkTimeMS;
         private QueueMT<Log> _logQueue;
         private SequenceGenerator _sequenceGenerator;

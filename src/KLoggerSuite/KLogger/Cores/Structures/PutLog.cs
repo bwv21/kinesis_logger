@@ -1,7 +1,7 @@
 ﻿using System;
 using KLogger.Types;
 
-namespace KLogger.Cores.Components
+namespace KLogger.Cores.Structures
 {
     internal class PutLog
     {

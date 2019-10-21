@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using KLogger.Configs;
 using KLogger.Cores.Loggers;
+using KLogger.Cores.Structures;
 using KLogger.Libs;
 using KLogger.Libs.AWS.Kinesis.Put;
 using KLogger.Libs.Reporters;

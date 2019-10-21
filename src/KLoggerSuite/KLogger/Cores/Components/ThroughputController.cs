@@ -6,6 +6,7 @@ using System.Threading;
 using KLogger.Configs;
 using KLogger.Cores.Exceptions;
 using KLogger.Cores.Loggers;
+using KLogger.Cores.Structures;
 using KLogger.Libs;
 using KLogger.Libs.AWS.Kinesis.Describe;
 using KLogger.Types;

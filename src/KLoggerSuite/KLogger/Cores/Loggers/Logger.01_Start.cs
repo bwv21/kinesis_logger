@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using KLogger.Cores.Components;
 using KLogger.Cores.Exceptions;
+using KLogger.Cores.Structures;
 using KLogger.Libs;
 using KLogger.Libs.Reporters;
 using KLogger.Types;

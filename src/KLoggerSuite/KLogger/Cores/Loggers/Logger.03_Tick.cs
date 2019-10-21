@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Threading;
 using KLogger.Configs;
 using KLogger.Cores.Components;
+using KLogger.Cores.Structures;
 using KLogger.Libs;
 using KLogger.Types;
 

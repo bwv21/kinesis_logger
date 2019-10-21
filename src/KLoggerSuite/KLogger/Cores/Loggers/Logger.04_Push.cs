@@ -1,5 +1,5 @@
 ﻿using System;
-using KLogger.Cores.Components;
+using KLogger.Cores.Structures;
 using KLogger.Libs;
 using KLogger.Types;
 using Newtonsoft.Json.Linq;

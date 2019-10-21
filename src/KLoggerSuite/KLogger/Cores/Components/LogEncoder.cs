@@ -2,6 +2,7 @@
 using System.Text;
 using KLogger.Configs;
 using KLogger.Cores.Loggers;
+using KLogger.Cores.Structures;
 using KLogger.Libs;
 using KLogger.Types;
 

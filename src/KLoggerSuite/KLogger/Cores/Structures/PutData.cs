@@ -2,7 +2,7 @@
 using KLogger.Libs;
 using Newtonsoft.Json;
 
-namespace KLogger.Cores.Components
+namespace KLogger.Cores.Structures
 {
     internal class PutData
     {

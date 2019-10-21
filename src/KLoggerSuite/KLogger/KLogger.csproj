@@ -54,7 +54,7 @@
     <Compile Include="Cores\Components\ThroughputController.cs" />
     <Compile Include="Cores\Loggers\Logger.04_Push.cs" />
     <Compile Include="Cores\Loggers\Logger.06_ConfigChange.cs" />
-    <Compile Include="Cores\Components\PutLog.cs" />
+    <Compile Include="Cores\Structures\PutLog.cs" />
     <Compile Include="Libs\AWS\Kinesis\BaseKinesisAPI.cs" />
     <Compile Include="Libs\AWS\Kinesis\Describe\DescribeStreamAPI.cs" />
     <Compile Include="Libs\AWS\Kinesis\Describe\ResponseDescribeStreamSummary.cs" />
@@ -76,13 +76,13 @@
     <Compile Include="Cores\Loggers\Logger.00_Member.cs" />
     <Compile Include="Cores\Loggers\Logger.02_Stop.cs" />
     <Compile Include="Cores\Loggers\Logger.03_Tick.cs" />
-    <Compile Include="Cores\Components\PutData.cs" />
+    <Compile Include="Cores\Structures\PutData.cs" />
     <Compile Include="Cores\Components\Putter.cs" />
-    <Compile Include="Cores\Components\Log.cs" />
+    <Compile Include="Cores\Structures\Log.cs" />
     <Compile Include="Cores\Loggers\Logger._.cs" />
     <Compile Include="Cores\Components\Watcher.cs" />
     <Compile Include="Libs\QueueMT.cs" />
-    <Compile Include="Cores\Components\PutContext.cs" />
+    <Compile Include="Cores\Structures\PutContext.cs" />
     <Compile Include="Libs\_ForInternalVisiableTo.cs" />
     <Compile Include="Types\CompletePut.cs" />
     <Compile Include="Types\ILog.cs" />
