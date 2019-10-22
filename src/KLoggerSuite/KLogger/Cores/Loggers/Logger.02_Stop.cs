@@ -21,6 +21,8 @@ namespace KLogger.Cores.Loggers
             }
             catch (Exception exception)
             {
+                State = StateType.Undefined;
+
                 Reporter.Fatal($"*[Exception] Fail Stop Logger!*\nInstanceID: `{InstanceID}`\nState: `{State}`\nException: {exception.Message}");
             }
         }
@@ -34,19 +36,23 @@ namespace KLogger.Cores.Loggers
                 if ((State == StateType.Start || State == StateType.Pause) == false)
                 {
                     Reporter.Warn($"*[Invalid State] Fail Stop Logger!*\nInstanceID: `{InstanceID}`\nState: `{State}`");
+
                     return;
                 }
 
                 State = StateType.Stopping;
 
                 StopWatcher();
+
                 StopLoggerThread();
 
-                WaitForFlushLogQueue(WAIT_MS);
-
-                StopCompletePutHandler();    // 전송 실패에 대한 처리는 큐의 플러시 이후에 정지해야 한다.
+                FlushLogQueue();
 
                 StopThroughputController();
+
+                WaitForPendingLog(WAIT_MS);
+
+                StopCompletePutHandler();
 
                 State = StateType.Stop;
             }
@@ -70,11 +76,11 @@ namespace KLogger.Cores.Loggers
             _loggerThreads.Clear();
         }
 
-        private void WaitForFlushLogQueue(Int32 waitMS)
+        private void FlushLogQueue()
         {
             if (State == StateType.Start)
             {
-                throw new LoggerException($"{nameof(WaitForFlushLogQueue)} Invalid Status: {State}");
+                throw new LoggerException($"{nameof(FlushLogQueue)} Invalid Status: {State}");
             }
 
             while (_logQueue.IsEmpty() == false)
@@ -83,7 +89,20 @@ namespace KLogger.Cores.Loggers
 
                 TickForced();
             }
+        }
 
+        private void StopCompletePutHandler()
+        {
+            CompletePutNotifier?.Stop();
+        }
+
+        private void StopThroughputController()
+        {
+            ThroughputController?.Stop();
+        }
+
+        private void WaitForPendingLog(Int32 waitMS)
+        {
             var sw = new Stopwatch();
             sw.Start();
 
@@ -103,16 +122,6 @@ namespace KLogger.Cores.Loggers
             {
                 Reporter.Fatal($"*Maybe Loss Log! - Timeout Stop*\nCount: `{Watcher.PendingLogCount.ToString()}`");
             }
-        }
-
-        private void StopCompletePutHandler()
-        {
-            CompletePutNotifier?.Stop();
-        }
-
-        private void StopThroughputController()
-        {
-            ThroughputController?.Stop();
         }
 
         private void WaitForRemainReport()

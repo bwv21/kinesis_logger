@@ -67,6 +67,9 @@ namespace KLogger.Types
     /// <summary> 로거의 현재 상태. </summary>
     public enum StateType
     {
+        /// <summary> 오류 발생으로 인한 미정의 상태. </summary>
+        Undefined,
+
         /// <summary> 정지 및 초기 상태. </summary>
         Stop,
 
