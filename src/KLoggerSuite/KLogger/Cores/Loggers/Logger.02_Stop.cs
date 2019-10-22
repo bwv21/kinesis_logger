@@ -42,7 +42,7 @@ namespace KLogger.Cores.Loggers
                 StopWatcher();
                 StopLoggerThread();
 
-                WaitForFlushQueue(WAIT_MS);
+                WaitForFlushLogQueue(WAIT_MS);
 
                 StopCompletePutHandler();    // 전송 실패에 대한 처리는 큐의 플러시 이후에 정지해야 한다.
 
@@ -70,11 +70,11 @@ namespace KLogger.Cores.Loggers
             _loggerThreads.Clear();
         }
 
-        private void WaitForFlushQueue(Int32 waitMS)
+        private void WaitForFlushLogQueue(Int32 waitMS)
         {
             if (State == StateType.Start)
             {
-                throw new LoggerException($"{nameof(WaitForFlushQueue)} Invalid Status: {State}");
+                throw new LoggerException($"{nameof(WaitForFlushLogQueue)} Invalid Status: {State}");
             }
 
             while (_logQueue.IsEmpty() == false)

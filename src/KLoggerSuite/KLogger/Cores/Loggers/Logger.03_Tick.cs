@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using KLogger.Configs;
-using KLogger.Cores.Components;
 using KLogger.Cores.Structures;
 using KLogger.Libs;
 using KLogger.Types;
@@ -229,7 +228,9 @@ namespace KLogger.Cores.Loggers
         private void DropLog(Log log, CompletePutNoticeResultType completePutNoticeResultType)
         {
             CompletePutNotifier.Push(new ILog[] { log }, completePutNoticeResultType);
+
             _threadLocalWatcherCounter.Value.DropLogCount += 1;
+
             Reporter.Error($"Fail Encode Log. LogType: {log.LogType}, Reason: {completePutNoticeResultType}");
         }
 

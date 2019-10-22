@@ -54,7 +54,7 @@ namespace KLogger.Cores.Loggers
                 InitializeLoggerComponents();
                 StartLoggerComponents();
 
-                CreateAndStartTickThread();
+                CreateAndStartLoggerThread();
 
                 _lastWorkTimeMS = Now.TimestampMS(StartTime);
 
@@ -259,7 +259,7 @@ namespace KLogger.Cores.Loggers
             ThroughputController?.Start();
         }
 
-        private void CreateAndStartTickThread()
+        private void CreateAndStartLoggerThread()
         {
             for (Int32 i = 0; i < Config.WorkThreadCount; ++i)
             {
