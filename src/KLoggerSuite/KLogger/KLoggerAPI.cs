@@ -51,15 +51,15 @@ namespace KLogger
         /// <param name="configPath">
         /// 설정 파일의 경로.
         /// </param>
-        /// <param name="onCompletePut">
-        /// 처리 완료한 로그에 대한 콜백(<see cref="CompletePutDelegate"/>).
+        /// <param name="noticeCompletePut">
+        /// 처리 완료한 로그에 대한 콜백(<see cref="NoticeCompletePutDelegate"/>).
         /// </param>
-        /// <param name="completePutNotifyType">
+        /// <param name="completePutNoticeType">
         /// 통지받을 처리 완료 결과 종류.
         /// </param>
-        public KLoggerAPI(String configPath, CompletePutDelegate onCompletePut, CompletePutNotifyType completePutNotifyType = CompletePutNotifyType.FailOnly)
+        public KLoggerAPI(String configPath, NoticeCompletePutDelegate noticeCompletePut, CompletePutNoticeType completePutNoticeType = CompletePutNoticeType.FailOnly)
         {
-            _logger = new Logger(configPath, onCompletePut, completePutNotifyType);
+            _logger = new Logger(configPath, noticeCompletePut, completePutNoticeType);
         }
 
         /// <summary>
@@ -68,15 +68,15 @@ namespace KLogger
         /// <param name="config">
         /// <see cref="Config.Create"/> 로 생성한 인스턴스.
         /// </param>
-        /// <param name="onCompletePut">
-        /// 처리 완료한 로그에 대한 콜백(<see cref="CompletePutDelegate"/>).
+        /// <param name="noticeCompletePut">
+        /// 처리 완료한 로그에 대한 콜백(<see cref="NoticeCompletePutDelegate"/>).
         /// </param>
-        /// <param name="completePutNotifyType">
-        /// <see cref="onCompletePut"/> 으로 통지받을 결과 종류.
+        /// <param name="completePutNoticeType">
+        /// <see cref="noticeCompletePut"/> 으로 통지받을 결과 종류.
         /// </param>
-        public KLoggerAPI(Config config, CompletePutDelegate onCompletePut, CompletePutNotifyType completePutNotifyType = CompletePutNotifyType.FailOnly)
+        public KLoggerAPI(Config config, NoticeCompletePutDelegate noticeCompletePut, CompletePutNoticeType completePutNoticeType = CompletePutNoticeType.FailOnly)
         {
-            _logger = new Logger(config, onCompletePut, completePutNotifyType);
+            _logger = new Logger(config, noticeCompletePut, completePutNoticeType);
         }
 
         /// <summary>

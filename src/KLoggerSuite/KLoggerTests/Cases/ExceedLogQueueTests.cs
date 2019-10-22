@@ -6,11 +6,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace KLoggerTests.Cases
 {
     [TestClass]
-    public class ExceedLogQueue : KLoggerTests
+    public class ExceedLogQueueTests : KLoggerTests
     {
         private const Int32 MAX_LOG_QUEUE_SIZE = 3;
 
-        protected override CompletePutNotifyType CompletePutNotifyType => CompletePutNotifyType.Both;
+        protected override CompletePutNoticeType CompletePutNoticeType => CompletePutNoticeType.Both;
 
         protected override Config OverwriteConfig()
         {

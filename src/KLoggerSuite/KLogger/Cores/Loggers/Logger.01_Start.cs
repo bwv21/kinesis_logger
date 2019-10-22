@@ -173,7 +173,7 @@ namespace KLogger.Cores.Loggers
 
         private void CreateCompletePutNotifier()
         {
-            if (CompletePutDelegate == null || CompletePutNotifyType == CompletePutNotifyType.None)
+            if (CompletePutDelegate == null || CompletePutNoticeType == CompletePutNoticeType.None)
             {
                 CompletePutNotifier = null;
                 return;

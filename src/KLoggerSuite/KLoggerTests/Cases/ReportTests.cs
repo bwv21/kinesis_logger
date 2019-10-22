@@ -8,7 +8,7 @@ namespace KLoggerTests.Cases
     [TestClass]
     public class ReportTests : KLoggerTests
     {
-        protected override CompletePutNotifyType CompletePutNotifyType => CompletePutNotifyType.Both;
+        protected override CompletePutNoticeType CompletePutNoticeType => CompletePutNoticeType.Both;
 
         protected override Config OverwriteConfig()
         {

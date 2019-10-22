@@ -10,7 +10,7 @@ namespace KLoggerTests.Cases
     {
         private const String IGNORE_TYPE = "ignore_test_type";
 
-        protected override CompletePutNotifyType CompletePutNotifyType => CompletePutNotifyType.Both;
+        protected override CompletePutNoticeType CompletePutNoticeType => CompletePutNoticeType.Both;
 
         protected override Config OverwriteConfig()
         {

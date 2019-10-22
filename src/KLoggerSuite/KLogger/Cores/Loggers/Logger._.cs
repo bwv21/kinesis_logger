@@ -10,24 +10,24 @@ namespace KLogger.Cores.Loggers
     /// </summary>
     internal partial class Logger
     {
-        public Logger(Config config, CompletePutDelegate onCompletePut, CompletePutNotifyType completePutNotifyType)
+        public Logger(Config config, NoticeCompletePutDelegate noticeCompletePut, CompletePutNoticeType completePutNoticeType)
         {
             Config = config ?? throw new NoNullAllowedException(nameof(config));
 
-            if (completePutNotifyType != CompletePutNotifyType.None)
+            if (completePutNoticeType != CompletePutNoticeType.None)
             {
-                if (onCompletePut == null)
+                if (noticeCompletePut == null)
                 {
                     throw new NoNullAllowedException(nameof(CompletePutDelegate));
                 }
             }
 
-            CompletePutDelegate = onCompletePut;
-            CompletePutNotifyType = completePutNotifyType;
+            CompletePutDelegate = noticeCompletePut;
+            CompletePutNoticeType = completePutNoticeType;
         }
 
-        public Logger(String configPath, CompletePutDelegate onCompletePut, CompletePutNotifyType completePutNotifyType)
-            : this(Config.Create(configPath), onCompletePut, completePutNotifyType)
+        public Logger(String configPath, NoticeCompletePutDelegate noticeCompletePut, CompletePutNoticeType completePutNoticeType)
+            : this(Config.Create(configPath), noticeCompletePut, completePutNoticeType)
         {
         }
     }

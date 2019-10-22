@@ -9,15 +9,15 @@ namespace KLoggerTests.Cases
     [TestClass]
     public class FailCompletePutNoticeTests : KLoggerTests
     {
-        protected override CompletePutNotifyType CompletePutNotifyType => CompletePutNotifyType.Both;
+        protected override CompletePutNoticeType CompletePutNoticeType => CompletePutNoticeType.Both;
 
-        protected override void OnCompletePut(IEnumerable<CompletePut> completePuts)
+        protected override void OnCompletePut(IEnumerable<CompletePutNotice> completePuts)
         {
-            foreach (CompletePut completePut in completePuts)
+            foreach (CompletePutNotice completePut in completePuts)
             {
                 Console.WriteLine($"{nameof(OnCompletePut)}: {completePut.Logs.Length}");
 
-                Assert.IsTrue(completePut.CompletePutType == CompletePutType.TooLargeLogSize);
+                Assert.IsTrue(completePut.CompletePutNoticeResultType == CompletePutNoticeResultType.TooLargeLogSize);
                 
                 foreach (ILog log in completePut.Logs)
                 {

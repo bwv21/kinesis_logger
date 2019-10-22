@@ -20,15 +20,15 @@ namespace KLoggerTests.Cases
         protected KLoggerAPI _kLoggerAPI;
         protected Config _kLoggerConfig;
         
-        protected abstract CompletePutNotifyType CompletePutNotifyType { get; }
+        protected abstract CompletePutNoticeType CompletePutNoticeType { get; }
 
-        protected virtual void OnCompletePut(IEnumerable<CompletePut> completePuts)
+        protected virtual void OnCompletePut(IEnumerable<CompletePutNotice> completePuts)
         {
-            foreach (CompletePut completePut in completePuts)
+            foreach (CompletePutNotice completePut in completePuts)
             {
-                Console.WriteLine($"{nameof(OnCompletePut)}({completePut.CompletePutType}): {completePut.Logs.Length}");
+                Console.WriteLine($"{nameof(OnCompletePut)}({completePut.CompletePutNoticeResultType}): {completePut.Logs.Length}");
 
-                if (completePut.CompletePutType != CompletePutType.Success)
+                if (completePut.CompletePutNoticeResultType != CompletePutNoticeResultType.Success)
                 {
                     Console.WriteLine("성공하지 못한 로그");
                     Assert.Fail("성공하지 못한 로그");
@@ -100,7 +100,7 @@ namespace KLoggerTests.Cases
         [TestInitialize]
         public void TestInitialize()
         {
-            _kLoggerAPI = new KLoggerAPI(OverwriteConfig(), OnCompletePut, CompletePutNotifyType);
+            _kLoggerAPI = new KLoggerAPI(OverwriteConfig(), OnCompletePut, CompletePutNoticeType);
             _kLoggerAPI.Start();
         }
 

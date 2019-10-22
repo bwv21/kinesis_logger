@@ -187,7 +187,7 @@ namespace KLogger.Cores.Components
             if (successPutLog != null)
             {
                 _errorCounter.ResetSerialError();
-                _completePutNotifier.Push(successAndFail.Item1.RawLogs, CompletePutType.Success);
+                _completePutNotifier.Push(successAndFail.Item1.RawLogs, CompletePutNoticeResultType.Success);
             }
 
             if (failPutLog != null)
@@ -301,7 +301,7 @@ namespace KLogger.Cores.Components
 
         private void DropLog(PutLog putLog, Int32 retryCount)
         {
-            Boolean isSuccess = _completePutNotifier.Push(putLog.RawLogs, CompletePutType.FailRetry);
+            Boolean isSuccess = _completePutNotifier.Push(putLog.RawLogs, CompletePutNoticeResultType.FailRetry);
             if (isSuccess == false)
             {
                 _reporter.Error($"Fail CompletePutNotifier.Push ({putLog.RawLogs.Length})");

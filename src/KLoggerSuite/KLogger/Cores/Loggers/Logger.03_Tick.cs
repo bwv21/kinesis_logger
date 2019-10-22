@@ -186,10 +186,10 @@ namespace KLogger.Cores.Loggers
                 Log log = _threadLocalLogs.Value[i];
                 Byte[] encodedLog = LogEncoder.Encode(log);
 
-                CompletePutType completePutType = ValidateEncodedLog(encodedLog);
-                if (completePutType != CompletePutType.Success)
+                CompletePutNoticeResultType completePutNoticeResultType = ValidateEncodedLog(encodedLog);
+                if (completePutNoticeResultType != CompletePutNoticeResultType.Success)
                 {
-                    DropLog(log, completePutType);
+                    DropLog(log, completePutNoticeResultType);
                     continue;
                 }
 
@@ -203,19 +203,19 @@ namespace KLogger.Cores.Loggers
             return new PutLog(rawLogs.ToArray(), encodedLogs.ToArray(), totalEncodedLogByte);
         }
 
-        private CompletePutType ValidateEncodedLog(Byte[] encodedLog)
+        private CompletePutNoticeResultType ValidateEncodedLog(Byte[] encodedLog)
         {
             if (encodedLog == null)
             {
-                return CompletePutType.FailEncode;
+                return CompletePutNoticeResultType.FailEncode;
             }
 
             if (CheckTooLargeLogSize(encodedLog))
             {
-                return CompletePutType.TooLargeLogSize;
+                return CompletePutNoticeResultType.TooLargeLogSize;
             }
 
-            return CompletePutType.Success;
+            return CompletePutNoticeResultType.Success;
         }
 
         private Boolean CheckTooLargeLogSize(Byte[] encodedLog)
@@ -226,11 +226,11 @@ namespace KLogger.Cores.Loggers
             return Config.MaxRecordByte < encodedLog.Length;
         }
 
-        private void DropLog(Log log, CompletePutType completePutType)
+        private void DropLog(Log log, CompletePutNoticeResultType completePutNoticeResultType)
         {
-            CompletePutNotifier.Push(new ILog[] { log }, completePutType);
+            CompletePutNotifier.Push(new ILog[] { log }, completePutNoticeResultType);
             _threadLocalWatcherCounter.Value.DropLogCount += 1;
-            Reporter.Error($"Fail Encode Log. LogType: {log.LogType}, Reason: {completePutType}");
+            Reporter.Error($"Fail Encode Log. LogType: {log.LogType}, Reason: {completePutNoticeResultType}");
         }
 
         private void UpdateThreadLocalWatcherCounter(String logType, Int32 sendBytes)

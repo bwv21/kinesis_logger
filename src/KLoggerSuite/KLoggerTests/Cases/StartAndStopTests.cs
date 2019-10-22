@@ -7,7 +7,7 @@ namespace KLoggerTests.Cases
     [TestClass]
     public class StartAndStopTests : KLoggerTests
     {
-        protected override CompletePutNotifyType CompletePutNotifyType => CompletePutNotifyType.None;
+        protected override CompletePutNoticeType CompletePutNoticeType => CompletePutNoticeType.None;
 
         [TestMethod]
         public void 여러_스레드에서_시작과_종료를_수행()

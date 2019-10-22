@@ -43,8 +43,8 @@ namespace KLogger.Cores.Loggers
         internal CompletePutNotifier CompletePutNotifier { get; private set; }
         internal ThroughputController ThroughputController { get; private set; }
 
-        internal CompletePutDelegate CompletePutDelegate { get; }
-        internal CompletePutNotifyType CompletePutNotifyType { get; }
+        internal NoticeCompletePutDelegate CompletePutDelegate { get; }
+        internal CompletePutNoticeType CompletePutNoticeType { get; }
 
         internal Int32 ThreadCount => _loggerThreads.Count;
         internal Int32 LogCountInQueue => _logQueue.Count + (ThroughputController?.LogCountInQueue ?? 0);

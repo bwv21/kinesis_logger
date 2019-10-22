@@ -11,15 +11,15 @@ namespace KLoggerTests.Cases
     {
         private const Int32 SERIAL_ERROR_COUNT = 3;
 
-        protected override CompletePutNotifyType CompletePutNotifyType => CompletePutNotifyType.FailOnly;
+        protected override CompletePutNoticeType CompletePutNoticeType => CompletePutNoticeType.FailOnly;
 
-        protected override void OnCompletePut(IEnumerable<CompletePut> completePuts)
+        protected override void OnCompletePut(IEnumerable<CompletePutNotice> completePuts)
         {
-            foreach (CompletePut completePut in completePuts)
+            foreach (CompletePutNotice completePut in completePuts)
             {
                 Console.WriteLine($"{nameof(OnCompletePut)}: {completePut.Logs.Length}");
 
-                Assert.IsTrue(completePut.CompletePutType == CompletePutType.FailRetry);
+                Assert.IsTrue(completePut.CompletePutNoticeResultType == CompletePutNoticeResultType.FailRetry);
 
                 foreach (ILog log in completePut.Logs)
                 {

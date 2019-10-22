@@ -15,26 +15,26 @@ namespace KLogger.Cores.Components
 
         private Config _config;
         private ErrorCounter _errorCounter;
-        private CompletePutNotifyType _completePutNotifyType;
-        private CompletePutDelegate _noticeCompletePut;
+        private CompletePutNoticeType _completePutNoticeType;
+        private NoticeCompletePutDelegate _noticeCompletePut;
 
-        private QueueMT<CompletePut> _completePuts;
+        private QueueMT<CompletePutNotice> _completePuts;
         private NaiveLoopThread _thread;
-        
-        internal void Initialize(Logger logger, CompletePutDelegate noticeCompletePut)
+
+        internal void Initialize(Logger logger, NoticeCompletePutDelegate noticeCompletePut)
         {
-            if (noticeCompletePut == null || logger.CompletePutNotifyType == CompletePutNotifyType.None)
+            if (noticeCompletePut == null || logger.CompletePutNoticeType == CompletePutNoticeType.None)
             {
                 throw new LoggerException($"Fail {nameof(CompletePutNotifier)}::{nameof(Initialize)}");
             }
 
             _config = logger.Config;
             _errorCounter = logger.ErrorCounter;
-            _completePutNotifyType = logger.CompletePutNotifyType;
+            _completePutNoticeType = logger.CompletePutNoticeType;
             _noticeCompletePut = noticeCompletePut;
         }
 
-        internal Boolean Push(ILog[] logs, CompletePutType completePutType)
+        internal Boolean Push(ILog[] logs, CompletePutNoticeResultType completePutNoticeResultType)
         {
             lock (_lock)
             {
@@ -44,7 +44,7 @@ namespace KLogger.Cores.Components
                 }
             }
 
-            return _completePuts.Push(new CompletePut(logs, completePutType));
+            return _completePuts.Push(new CompletePutNotice(logs, completePutNoticeResultType));
         }
 
         internal void Start()
@@ -56,7 +56,7 @@ namespace KLogger.Cores.Components
                     throw new LoggerException($"Fail {nameof(CompletePutNotifier)}::{nameof(Start)} ${nameof(_thread)} is not null");
                 }
 
-                _completePuts = new QueueMT<CompletePut>();
+                _completePuts = new QueueMT<CompletePutNotice>();
 
                 _thread = new NaiveLoopThread(HandleCompletePut, _config.CompletePutIntervalMS, e => _errorCounter.RaiseError(e), nameof(CompletePutNotifier));
                 _thread.Start();
@@ -103,25 +103,25 @@ namespace KLogger.Cores.Components
 
         private void PopAndNotice()
         {
-            var completePuts = new List<CompletePut>(_completePuts.Count);
+            var completePuts = new List<CompletePutNotice>(_completePuts.Count);
 
             while (_completePuts.IsEmpty() == false)
             {
-                CompletePut completePut = _completePuts.Pop();
-                if (completePut.CompletePutType == CompletePutType.Success)
+                CompletePutNotice completePutNotice = _completePuts.Pop();
+                if (completePutNotice.CompletePutNoticeResultType == CompletePutNoticeResultType.Success)
                 {
-                    if (_completePutNotifyType == CompletePutNotifyType.Both ||
-                        _completePutNotifyType == CompletePutNotifyType.SuccessOnly)
+                    if (_completePutNoticeType == CompletePutNoticeType.Both ||
+                        _completePutNoticeType == CompletePutNoticeType.SuccessOnly)
                     {
-                        completePuts.Add(completePut);
+                        completePuts.Add(completePutNotice);
                     }
                 }
                 else
                 {
-                    if (_completePutNotifyType == CompletePutNotifyType.Both ||
-                        _completePutNotifyType == CompletePutNotifyType.FailOnly)
+                    if (_completePutNoticeType == CompletePutNoticeType.Both ||
+                        _completePutNoticeType == CompletePutNoticeType.FailOnly)
                     {
-                        completePuts.Add(completePut);
+                        completePuts.Add(completePutNotice);
                     }
                 }
             }

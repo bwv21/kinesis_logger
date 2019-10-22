@@ -55,7 +55,7 @@
     <Compile Include="Cases\BasicSendTests.cs" />
     <Compile Include="Cases\ChangeConfigTests.cs" />
     <Compile Include="Cases\DropLogTests.cs" />
-    <Compile Include="Cases\ExceedLogQueue.cs" />
+    <Compile Include="Cases\ExceedLogQueueTests.cs" />
     <Compile Include="Cases\FailCompletePutNoticeTests.cs" />
     <Compile Include="Cases\FastSendTests.cs" />
     <Compile Include="Cases\SerialErrorTests.cs" />

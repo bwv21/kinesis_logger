@@ -10,20 +10,20 @@ namespace KLoggerTests.Cases
     [TestClass]
     public class DropLogTests : KLoggerTests
     {
-        protected override CompletePutNotifyType CompletePutNotifyType => CompletePutNotifyType.Both;
+        protected override CompletePutNoticeType CompletePutNoticeType => CompletePutNoticeType.Both;
 
-        protected override void OnCompletePut(IEnumerable<CompletePut> completePuts)
+        protected override void OnCompletePut(IEnumerable<CompletePutNotice> completePuts)
         {
-            foreach (CompletePut completePut in completePuts)
+            foreach (CompletePutNotice completePut in completePuts)
             {
-                Console.WriteLine($"{nameof(OnCompletePut)}: {completePut.Logs.Length}, {completePut.CompletePutType}");
+                Console.WriteLine($"{nameof(OnCompletePut)}: {completePut.Logs.Length}, {completePut.CompletePutNoticeResultType}");
 
-                if (completePut.CompletePutType == CompletePutType.FailRetry)
+                if (completePut.CompletePutNoticeResultType == CompletePutNoticeResultType.FailRetry)
                 {
                     Console.WriteLine("올바르지 않은 결과");
                 }
 
-                Assert.IsTrue(completePut.CompletePutType == CompletePutType.FailRetry);
+                Assert.IsTrue(completePut.CompletePutNoticeResultType == CompletePutNoticeResultType.FailRetry);
 
                 foreach (ILog log in completePut.Logs)
                 {

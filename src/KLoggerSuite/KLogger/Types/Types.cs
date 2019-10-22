@@ -4,23 +4,23 @@ namespace KLogger.Types
 {
     /// <summary>
     /// <para> 로그 전송의 최종 완료 콜백으로 여러 스레드에서 불릴 수 있으며 순서를 보장하지 않는다. </para>
-    /// 로거의 설정(<see cref="CompletePutNotifyType"/>)에 값에 따라 통지가 오지 않거나 특정 타입의 통지만 온다.
+    /// 로거의 설정(<see cref="CompletePutNoticeType"/>)에 값에 따라 통지가 오지 않거나 특정 타입의 통지만 온다.
     /// </summary>
     /// <param name="completePuts">
     /// 한 개 이상의 완료(성공 또는 실패)한 로그 정보를 담고있다.
     /// </param>
-    public delegate void CompletePutDelegate(IEnumerable<CompletePut> completePuts);
+    public delegate void NoticeCompletePutDelegate(IEnumerable<CompletePutNotice> completePuts);
 
-    /// <summary> 통지받을 로그 처리 결과의 타입. <see cref="CompletePutDelegate"/> 에 언제 통지할지를 결정한다. </summary>
-    public enum CompletePutNotifyType
+    /// <summary> 통지받을 로그 처리 결과의 타입. <see cref="NoticeCompletePutDelegate"/> 에 언제 통지할지를 결정한다. </summary>
+    public enum CompletePutNoticeType
     {
         /// <summary> 모든 통지를 받지 않는다. </summary>
         None = -1,
 
-        /// <summary> 실패(<see cref="CompletePutType.Success"/> 외 나머지) 통지만 받는다(권장). </summary>
+        /// <summary> 실패(<see cref="CompletePutNoticeResultType.Success"/> 외 나머지) 통지만 받는다(권장). </summary>
         FailOnly,
 
-        /// <summary> 성공(<see cref="CompletePutType.Success"/>) 통지만 받는다. </summary>
+        /// <summary> 성공(<see cref="CompletePutNoticeResultType.Success"/>) 통지만 받는다. </summary>
         SuccessOnly,
 
         /// <summary> 성공 또는 실패의 모든 통지를 받는다. </summary>
@@ -105,7 +105,7 @@ namespace KLogger.Types
     }
 
     /// <summary> 로그의 최종 처리 결과 타입. </summary>
-    public enum CompletePutType
+    public enum CompletePutNoticeResultType
     {
         /// <summary> 전송 성공. </summary>
         Success = 0,

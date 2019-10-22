@@ -84,7 +84,7 @@
     <Compile Include="Libs\QueueMT.cs" />
     <Compile Include="Cores\Structures\PutContext.cs" />
     <Compile Include="Libs\_ForInternalVisiableTo.cs" />
-    <Compile Include="Types\CompletePut.cs" />
+    <Compile Include="Types\CompletePutNotice.cs" />
     <Compile Include="Types\ILog.cs" />
     <Compile Include="Types\StringLogObject.cs" />
     <Compile Include="Types\Types.cs" />

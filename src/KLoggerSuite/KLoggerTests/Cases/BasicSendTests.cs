@@ -11,7 +11,7 @@ namespace KLoggerTests.Cases
     [TestClass]
     public class BasicSendTests : KLoggerTests
     {
-        protected override CompletePutNotifyType CompletePutNotifyType => CompletePutNotifyType.Both;
+        protected override CompletePutNoticeType CompletePutNoticeType => CompletePutNoticeType.Both;
 
         protected override Config OverwriteConfig()
         {
