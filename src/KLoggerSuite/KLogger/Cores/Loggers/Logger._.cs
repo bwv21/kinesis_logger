@@ -10,7 +10,7 @@ namespace KLogger.Cores.Loggers
     /// </summary>
     internal partial class Logger
     {
-        public Logger(Config config, NoticeCompletePutDelegate noticeCompletePut, CompletePutNoticeType completePutNoticeType)
+        internal Logger(Config config, NoticeCompletePutDelegate noticeCompletePut, CompletePutNoticeType completePutNoticeType)
         {
             Config = config ?? throw new NoNullAllowedException(nameof(config));
 
@@ -26,7 +26,7 @@ namespace KLogger.Cores.Loggers
             CompletePutNoticeType = completePutNoticeType;
         }
 
-        public Logger(String configPath, NoticeCompletePutDelegate noticeCompletePut, CompletePutNoticeType completePutNoticeType)
+        internal Logger(String configPath, NoticeCompletePutDelegate noticeCompletePut, CompletePutNoticeType completePutNoticeType)
             : this(Config.Create(configPath), noticeCompletePut, completePutNoticeType)
         {
         }
