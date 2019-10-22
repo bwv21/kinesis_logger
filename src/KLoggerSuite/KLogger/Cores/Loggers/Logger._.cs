@@ -6,13 +6,22 @@ using KLogger.Types;
 namespace KLogger.Cores.Loggers
 {
     /// <summary>
-    /// the logger.
+    ///     the logger.
     /// </summary>
     internal partial class Logger
     {
         public Logger(Config config, CompletePutDelegate onCompletePut, CompletePutNotifyType completePutNotifyType)
         {
             Config = config ?? throw new NoNullAllowedException(nameof(config));
+
+            if (completePutNotifyType != CompletePutNotifyType.None)
+            {
+                if (onCompletePut == null)
+                {
+                    throw new NoNullAllowedException(nameof(CompletePutDelegate));
+                }
+            }
+
             CompletePutDelegate = onCompletePut;
             CompletePutNotifyType = completePutNotifyType;
         }

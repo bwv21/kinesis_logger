@@ -12,12 +12,12 @@ namespace KLogger.Cores.Components
     {
         private readonly JsonSerializer _jsonSerializer = new JsonSerializer();
 
-        private readonly String _id;
-        private readonly String _instanceID;
-        private readonly Int32 _compressLogThresholdByte;
-        private readonly ErrorCounter _errorCounter;
+        private String _id;
+        private String _instanceID;
+        private Int32 _compressLogThresholdByte;
+        private ErrorCounter _errorCounter;
 
-        internal LogEncoder(Logger logger)
+        internal void Initialize(Logger logger)
         {
             _id = logger.Config.ID;
             _instanceID = logger.InstanceID;

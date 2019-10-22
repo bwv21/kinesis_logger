@@ -31,9 +31,9 @@ namespace KLogger.Cores.Components
 
         private readonly Object _lock = new Object();
 
-        private readonly Action<PutLog> _putAction;
-        private readonly ErrorCounter _errorCounter;
-        private readonly DescribeStreamAPI _describeStreamAPI;
+        private Putter _putter;
+        private ErrorCounter _errorCounter;
+        private DescribeStreamAPI _describeStreamAPI;
 
         private QueueMT<PutLog> _putLogs;
         private List<PutLog> _remainPutLogs;
@@ -51,16 +51,18 @@ namespace KLogger.Cores.Components
 
         internal Int32 LogCountInQueue => _putLogs?.Count ?? 0;
 
-        internal ThroughputController(Action<PutLog> putAction, Logger logger)
+        internal void Initialize(Logger logger)
         {
-            _putAction = putAction;
-            _errorCounter = logger.ErrorCounter;
-            _describeStreamAPI = new DescribeStreamAPI(logger.Config.AWSs.Region,
-                                                       logger.Config.AWSs.DecryptedAccessID,
-                                                       logger.Config.AWSs.DecryptedSecretKey,
-                                                       logger.Config.AWSs.KinesisStreamName,
-                                                       OnDescribeStreamRequestCompleted);
-            _shardCount = 1;
+            lock (_lock)
+            {
+                _putter = logger.Putter;
+                _errorCounter = logger.ErrorCounter;
+                _describeStreamAPI = new DescribeStreamAPI(logger.Config.AWSs.Region,
+                                                           logger.Config.AWSs.DecryptedAccessID,
+                                                           logger.Config.AWSs.DecryptedSecretKey,
+                                                           logger.Config.AWSs.KinesisStreamName,
+                                                           OnDescribeStreamRequestCompleted);
+            }
         }
 
         internal void Push(PutLog putLog)
@@ -110,6 +112,7 @@ namespace KLogger.Cores.Components
                 _isThrottling = false;
 
                 // 샤드가 최소 1개는 존재할 것이므로 1개 기준으로 초기화.
+                _shardCount = 1;
                 _byteCapacity = Const.BYTE_FOR_SECOND_PER_SHARD_BYTE;
                 _recordCapacity = Const.RECORD_FOR_SECOND_PER_SHARD_COUNT;
 
@@ -157,7 +160,7 @@ namespace KLogger.Cores.Components
 
         private void Put(PutLog putLog)
         {
-            _putAction(putLog);
+            _putter.Put(putLog);
         }
 
         private void ThroughputControl(DateTime now)

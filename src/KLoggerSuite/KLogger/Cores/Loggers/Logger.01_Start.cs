@@ -48,21 +48,11 @@ namespace KLogger.Cores.Loggers
 
                 GenerateInstanceID();
 
-                CreateSequenceGenerator();
-                CreateLogQueue();
-                CreateIgnoreLogTypes();
-                CreateReporter();
-                CreateErrorCounter();
+                CreateLoggerParts();
 
-                InitializeWatcher();
-                InitializeCompletePutNotifier();
-                InitializeLogEncoder();
-                InitializeThroughputController();
-                InitializePutter();
-
-                StartWatcher();
-                StartCompletePutNotifier();
-                StartThroughputController();
+                CreateLoggerComponents();
+                InitializeLoggerComponents();
+                StartLoggerComponents();
 
                 CreateAndStartTickThread();
 
@@ -82,6 +72,15 @@ namespace KLogger.Cores.Loggers
         private void GenerateInstanceID()
         {
             InstanceID = Rand.RandString(13) + Rand.RandInt32(0, 10).ToString() + Rand.RandInt32(0, 10).ToString() + Rand.RandInt32(0, 10).ToString();
+        }
+
+        private void CreateLoggerParts()
+        {
+            CreateSequenceGenerator();
+            CreateLogQueue();
+            CreateIgnoreLogTypes();
+            CreateReporter();
+            CreateErrorCounter();
         }
 
         private void CreateSequenceGenerator()
@@ -158,61 +157,91 @@ namespace KLogger.Cores.Loggers
             ErrorCounter = new ErrorCounter(Reporter, Config.MaxSerialErrorCount, Pause);
         }
 
-        private void InitializeWatcher()
+        private void CreateLoggerComponents()
+        {
+            CreateWatcher();
+            CreateCompletePutNotifier();
+            CreateLogEncoder();
+            CreateThroughputController();
+            CreatePutter();
+        }
+        
+        private void CreateWatcher()
         {
             Watcher = new Watcher();
+        }
+
+        private void CreateCompletePutNotifier()
+        {
+            if (CompletePutDelegate == null || CompletePutNotifyType == CompletePutNotifyType.None)
+            {
+                CompletePutNotifier = null;
+                return;
+            }
+
+            CompletePutNotifier = new CompletePutNotifier();
+        }
+
+        private void CreateLogEncoder()
+        {
+            LogEncoder = new LogEncoder();
+        }
+
+        private void CreatePutter()
+        {
+            Putter = new Putter();
+        }
+
+        private void CreateThroughputController()
+        {
+            if (Config.UseThroughputControl != 1)
+            {
+                ThroughputController = null;
+                return;
+            }
+
+            ThroughputController = new ThroughputController();
+        }
+
+        private void InitializeLoggerComponents()
+        {
+            InitializeWatcher();
+            InitializeCompletePutNotifier();
+            InitializeLogEncoder();
+            InitializeThroughputController();
+            InitializePutter();
+        }
+
+        private void InitializeWatcher()
+        {
             Watcher.Initialize(this);
         }
 
         private void InitializeCompletePutNotifier()
         {
-            if (ErrorCounter == null)
-            {
-                throw new LoggerStartException(StartResultType.Invalid); // 초기화 실수.
-            }
-
-            CompletePutNotifier = new CompletePutNotifier(this, CompletePutDelegate);
+            CompletePutNotifier?.Initialize(this, CompletePutDelegate);
         }
 
         private void InitializeLogEncoder()
         {
-            if (ErrorCounter == null)
-            {
-                throw new LoggerStartException(StartResultType.Invalid); // 초기화 실수.
-            }
-
-            LogEncoder = new LogEncoder(this);
+            LogEncoder.Initialize(this);
         }
 
         private void InitializeThroughputController()
         {
-            if (Config.UseThroughputControl != 1)
-            {
-                return;
-            }
-
-            if (ErrorCounter == null)
-            {
-                throw new LoggerStartException(StartResultType.Invalid); // 초기화 실수.
-            }
-
-            // Putter와 초기화 순서의 순환 문제가 생겨서 Action 을 사용한다.
-            ThroughputController = new ThroughputController(putLog => Putter.Put(putLog), this);
+            ThroughputController?.Initialize(this);
         }
 
         private void InitializePutter()
         {
-            if (Reporter == null || Watcher == null || ErrorCounter == null || CompletePutNotifier == null)
-            {
-                throw new LoggerStartException(StartResultType.Invalid);    // 초기화 실수.
-            }
+            Putter.Initialize(this);
+        }
 
-            if (Config.UseThroughputControl == 1 && ThroughputController == null)
-            {
-                throw new LoggerStartException(StartResultType.Invalid); // 초기화 실수.
-            }
-
-            Putter = new Putter(this);
+        private void StartLoggerComponents()
+        {
+            StartWatcher();
+            StartCompletePutNotifier();
+            StartThroughputController();
         }
 
         private void StartWatcher()
@@ -222,7 +251,7 @@ namespace KLogger.Cores.Loggers
 
         private void StartCompletePutNotifier()
         {
-            CompletePutNotifier.Start();
+            CompletePutNotifier?.Start();
         }
 
         private void StartThroughputController()

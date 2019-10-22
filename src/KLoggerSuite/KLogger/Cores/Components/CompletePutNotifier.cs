@@ -13,31 +13,29 @@ namespace KLogger.Cores.Components
     {
         private readonly Object _lock = new Object();
 
-        private readonly Config _config;
-        private readonly ErrorCounter _errorCounter;
-        private readonly CompletePutNotifyType _completePutNotifyType;
-        private readonly CompletePutDelegate _noticeCompletePut;
-        private readonly Boolean _isDisabled;
+        private Config _config;
+        private ErrorCounter _errorCounter;
+        private CompletePutNotifyType _completePutNotifyType;
+        private CompletePutDelegate _noticeCompletePut;
 
         private QueueMT<CompletePut> _completePuts;
         private NaiveLoopThread _thread;
-
-        internal CompletePutNotifier(Logger logger, CompletePutDelegate noticeCompletePut)
+        
+        internal void Initialize(Logger logger, CompletePutDelegate noticeCompletePut)
         {
+            if (noticeCompletePut == null || logger.CompletePutNotifyType == CompletePutNotifyType.None)
+            {
+                throw new LoggerException($"Fail {nameof(CompletePutNotifier)}::{nameof(Initialize)}");
+            }
+
             _config = logger.Config;
             _errorCounter = logger.ErrorCounter;
             _completePutNotifyType = logger.CompletePutNotifyType;
             _noticeCompletePut = noticeCompletePut;
-            _isDisabled = _noticeCompletePut == null || logger.CompletePutNotifyType == CompletePutNotifyType.None;
         }
 
         internal Boolean Push(ILog[] logs, CompletePutType completePutType)
         {
-            if (_isDisabled)
-            {
-                return true;
-            }
-
             lock (_lock)
             {
                 if (_thread == null)
@@ -51,11 +49,6 @@ namespace KLogger.Cores.Components
 
         internal void Start()
         {
-            if (_isDisabled)
-            {
-                return;
-            }
-
             lock (_lock)
             {
                 if (_thread != null)
@@ -72,11 +65,6 @@ namespace KLogger.Cores.Components
 
         internal void Stop()
         {
-            if (_isDisabled)
-            {
-                return;
-            }
-
             lock (_lock)
             {
                 if (_thread == null)
@@ -141,7 +129,7 @@ namespace KLogger.Cores.Components
             if (0 < completePuts.Count)
             {
                 // 알림을 받는 쪽과 이곳의 분리를 위해 스레드 풀을 이용한다.
-                ThreadPool.QueueUserWorkItem(_ => _noticeCompletePut(completePuts));
+                ThreadPool.QueueUserWorkItem(_ => _noticeCompletePut?.Invoke(completePuts));
             }
         }
     }

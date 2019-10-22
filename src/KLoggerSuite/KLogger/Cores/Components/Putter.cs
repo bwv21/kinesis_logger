@@ -21,15 +21,15 @@ namespace KLogger.Cores.Components
         private const Int32 RETRY_SLEEP_MS = 1000;
         private const Int32 MAX_RETRY_RETRY_SLEEP_MS = 30000;
 
-        private readonly Config _config;
-        private readonly Reporter _reporter;
-        private readonly Watcher _watcher;
-        private readonly ErrorCounter _errorCounter;
-        private readonly CompletePutNotifier _completePutNotifier;
-        private readonly ThroughputController _throughputController;
-        private readonly PutAPI _kinesisPutAPI;
-
-        internal Putter(Logger logger)
+        private Config _config;
+        private Reporter _reporter;
+        private Watcher _watcher;
+        private ErrorCounter _errorCounter;
+        private CompletePutNotifier _completePutNotifier;
+        private ThroughputController _throughputController;
+        private PutAPI _kinesisPutAPI;
+        
+        internal void Initialize(Logger logger)
         {
             _config = logger.Config;
             _reporter = logger.Reporter;

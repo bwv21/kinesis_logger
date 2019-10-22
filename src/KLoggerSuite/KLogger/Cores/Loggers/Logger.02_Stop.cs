@@ -107,17 +107,12 @@ namespace KLogger.Cores.Loggers
 
         private void StopCompletePutHandler()
         {
-            CompletePutNotifier.Stop();
+            CompletePutNotifier?.Stop();
         }
 
         private void StopThroughputController()
         {
-            if (Config.UseThroughputControl != 1)
-            {
-                return;
-            }
-
-            ThroughputController.Stop();
+            ThroughputController?.Stop();
         }
 
         private void WaitForRemainReport()
