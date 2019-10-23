@@ -65,6 +65,9 @@ namespace KLoggerTests.Cases
             // 해제하지 않으면 실제 전송까지 가지 못하고 인코딩에서 TooLargeLogSize 통지가 온다.
             _kLoggerConfig.MaxRecordByte = Const.MAX_KINESIS_RECORD_BYTE * 10;
 
+            // 스루풋 컨트롤러에 있는 로그 최대 크기 검사 로직을 피하기위해 끈다.
+            _kLoggerConfig.UseThroughputControl = 0;
+
             // 압축하지 않도록 한다.
             _kLoggerConfig.CompressLogThresholdByte = _kLoggerConfig.MaxRecordByte + 1;
 
@@ -73,7 +76,7 @@ namespace KLoggerTests.Cases
 
             // 테스트 시간을 줄이기 위해 로그 모으는 시간을 조절한다.
             _kLoggerConfig.MaxBatchWaitTimeMS = 1000;
-
+            
             return config;
         }
 

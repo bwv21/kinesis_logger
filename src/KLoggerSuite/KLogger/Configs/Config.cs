@@ -113,14 +113,14 @@ namespace KLogger.Configs
             /// <summary> 표기 시간(UTC)에 더할 시간(한국이면 +9). 기본값은 <see cref="Const.SLACK_UTC_ADD_HOUR"/> </summary>
             [JsonProperty] public Int32 UTCAddHour { get; internal set; }
 
-            /// <summary> 메시지의 순서 보장(100% 보장은 안됨). 보장(1), 미보장(0) 기본값은 <see cref="Const.REPORT_TRY_ORDERING_MESSAGE"/> </summary>
+            /// <summary> 메시지의 순서 보장(100% 보장은 안됨). 보장(1), 미보장(0) 기본값은 <see cref="Const.SLACK_REPORTER_TRY_ORDERING_MESSAGE"/> </summary>
             [JsonProperty] public Int32 TryOrderingMessage { get; internal set; }
 
             public SlackConfig()
             {
                 IconEmoji = null;
                 UTCAddHour = Const.SLACK_UTC_ADD_HOUR;
-                TryOrderingMessage = Const.REPORT_TRY_ORDERING_MESSAGE;
+                TryOrderingMessage = Const.SLACK_REPORTER_TRY_ORDERING_MESSAGE;
             }
         }
 
@@ -212,6 +212,7 @@ namespace KLogger.Configs
             CompressLogThresholdByte = Const.COMPRESS_LOG_THRESHOLD_BYTE;
             Watchers = new Watcher();
             UseIgnoreLogType = Const.USE_IGNORE_LOG_TYPES;
+            UseThroughputControl = Const.USE_THROUGHPUT_CONTROL;
             ReporterType = Const.REPORTER_TYPE;
             ReportLevel = Const.REPORT_LEVEL;
         }
