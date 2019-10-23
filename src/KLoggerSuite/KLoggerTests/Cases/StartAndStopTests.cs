@@ -19,9 +19,8 @@ namespace KLoggerTests.Cases
             _kLoggerAPI.Stop();
             _kLoggerAPI.StartIfFailThrow();
             _kLoggerAPI.Stop();
-            // . //
-
-            // 여러 스레드에서 시작과 정지를 `올바르지 않게` 사용. //
+            
+            // 여러 스레드에서 시작과 정지를 `올바르지 않게` 사용.
             var thread1 = new Thread(() =>
                                      {
                                          _kLoggerAPI.Start();
@@ -53,8 +52,8 @@ namespace KLoggerTests.Cases
             thread2.Join();
             thread3.Join();
 
-            _kLoggerAPI.Stop(); // 스레드 테스트가 끝나고 시작 상태면 정지.
-            // . //
+            // 스레드 테스트가 끝나고 시작 상태면 정지.
+            _kLoggerAPI.Stop();
 
             // 다시 단일 스레드에서 시작과 정지를 번갈아가며 테스트.
             _kLoggerAPI.StartIfFailThrow();
@@ -63,7 +62,6 @@ namespace KLoggerTests.Cases
             _kLoggerAPI.Stop();
             _kLoggerAPI.StartIfFailThrow();
             _kLoggerAPI.Stop();
-            //. //
 
             Assert.IsTrue(_kLoggerAPI.State == StateType.Stop);
 

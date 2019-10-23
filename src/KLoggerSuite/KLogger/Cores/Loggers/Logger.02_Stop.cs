@@ -21,7 +21,7 @@ namespace KLogger.Cores.Loggers
             }
             catch (Exception exception)
             {
-                State = StateType.Undefined;
+                State = StateType.Stop;
 
                 Reporter.Fatal($"*[Exception] Fail Stop Logger!*\nInstanceID: `{InstanceID}`\nState: `{State}`\nException: {exception.Message}");
             }
@@ -36,7 +36,6 @@ namespace KLogger.Cores.Loggers
                 if ((State == StateType.Start || State == StateType.Pause) == false)
                 {
                     Reporter.Warn($"*[Invalid State] Fail Stop Logger!*\nInstanceID: `{InstanceID}`\nState: `{State}`");
-
                     return;
                 }
 

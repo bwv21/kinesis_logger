@@ -24,6 +24,8 @@ namespace KLogger.Cores.Loggers
             }
             catch (LoggerStartException loggerStartException)
             {
+                State = StateType.Stop;
+
                 return loggerStartException.StartResult;
             }
         }
