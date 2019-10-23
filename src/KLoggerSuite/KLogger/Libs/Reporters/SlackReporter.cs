@@ -14,7 +14,7 @@ namespace KLogger.Libs.Reporters
         private readonly String _channelError;
         private readonly String _channelFatal;
 
-        private readonly Boolean _orderGuarantee;
+        private readonly Boolean _tryOrderingReport;
 
         private NaiveLoopThread _thread;
         private QueueMT<Action> _reportActions;
@@ -29,7 +29,7 @@ namespace KLogger.Libs.Reporters
                              String channelFatal,
                              String iconEmoji = null,
                              Int32 addUTCHour = 0,
-                             Boolean orderGuarantee = false)
+                             Boolean tryOrderingReport = false)
             : base(ReporterType.Slack, reportLevel)
         {
             if (String.IsNullOrEmpty(webhookURL))
@@ -46,9 +46,9 @@ namespace KLogger.Libs.Reporters
 
                 _slackWebhook = new SlackWebhook(webhookURL, _channelDebug, userName, iconEmoji, addUTCHour);
 
-                _orderGuarantee = orderGuarantee;
+                _tryOrderingReport = tryOrderingReport;
 
-                if (_orderGuarantee)
+                if (_tryOrderingReport)
                 {
                     _thread = new NaiveLoopThread(SendReportInQueue, THREAD_INTERVAL_MS, null, nameof(SlackReporter));
                     _reportActions = new QueueMT<Action>();
@@ -88,7 +88,7 @@ namespace KLogger.Libs.Reporters
                 return;
             }
 
-            if (_orderGuarantee)
+            if (_tryOrderingReport)
             {
                 _reportActions?.Push(() => _slackWebhook?.SendSync(_channelDebug, userName, title, text, "good", null));
             }
@@ -105,7 +105,7 @@ namespace KLogger.Libs.Reporters
                 return;
             }
 
-            if (_orderGuarantee)
+            if (_tryOrderingReport)
             {
                 _reportActions?.Push(() => _slackWebhook?.SendSync(_channelInfo, userName, title, text, "#439FE0", null));
             }
@@ -122,7 +122,7 @@ namespace KLogger.Libs.Reporters
                 return;
             }
 
-            if (_orderGuarantee)
+            if (_tryOrderingReport)
             {
                 _reportActions?.Push(() => _slackWebhook?.SendSync(_channelWarn, userName, title, text, "warning", null));
             }
@@ -139,7 +139,7 @@ namespace KLogger.Libs.Reporters
                 return;
             }
 
-            if (_orderGuarantee)
+            if (_tryOrderingReport)
             {
                 _reportActions?.Push(() => _slackWebhook?.SendSync(_channelError, userName, title, text, "danger", null));
             }
@@ -156,7 +156,7 @@ namespace KLogger.Libs.Reporters
                 return;
             }
 
-            if (_orderGuarantee)
+            if (_tryOrderingReport)
             {
                 _reportActions?.Push(() => _slackWebhook?.SendSync(_channelFatal, userName, title, text, "#000000", null));
             }

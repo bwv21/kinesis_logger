@@ -134,7 +134,7 @@ namespace KLogger.Cores.Loggers
                                              Config.SlackConfigs.FatalChannel,
                                              Config.SlackConfigs.IconEmoji,
                                              Config.SlackConfigs.UTCAddHour,
-                                             Config.SlackConfigs.TryOrderingMessage == 1);
+                                             Config.SlackConfigs.TryOrderingReport == 1);
             }
             else
             {

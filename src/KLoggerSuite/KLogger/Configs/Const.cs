@@ -80,8 +80,8 @@ namespace KLogger.Configs
         /// <summary> <see cref="Config.Watcher.ReportQueueStdDev"/> 의 기본값. </summary>
         public const Int32 REPORT_QUEUE_STD_DEV = 100;
 
-        /// <summary> <see cref="Config.SlackConfig.TryOrderingMessage"/> 의 기본값. </summary>
-        public const Int32 SLACK_REPORTER_TRY_ORDERING_MESSAGE = 1;
+        /// <summary> <see cref="Config.SlackConfig.TryOrderingReport"/> 의 기본값. </summary>
+        public const Int32 SLACK_REPORTER_TRY_ORDERING_REPORT = 1;
 
         /// <summary> <see cref="Config.ReportLevel"/> 의 기본값. </summary>
         public const ReportLevelType REPORT_LEVEL = ReportLevelType.Warn;
