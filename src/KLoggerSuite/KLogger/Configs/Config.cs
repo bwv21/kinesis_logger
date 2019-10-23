@@ -15,7 +15,7 @@ namespace KLogger.Configs
 {
     /// <summary>
     /// <para> 로거의 설정. <see cref="Config.Create"/> 로 생성한다. </para>
-    /// 파일에 없는 항목은 기본값이 사용된다.
+    /// 설정 파일에 없는 항목은 기본값이 사용된다.
     /// </summary>
     public class Config
     {
@@ -62,7 +62,7 @@ namespace KLogger.Configs
             /// <summary> 모니터링 동작 주기. 기본값은 <see cref="Const.WATCHER_INTERVAL_MS"/> </summary>
             [JsonProperty] public Int32 IntervalMS { get; internal set; }
 
-            /// <summary> <see cref="IntervalMS"/> 동안 평균 로그 처리(Tick)시간이 이 값보다 큰 경우 보고한다. 기본값은 <see cref="Const.REPORT_ELAPSED_MEAN_MS"/> </summary>
+            /// <summary> <see cref="IntervalMS"/> 동안 평균 로그 처리시간이 이 값보다 큰 경우 보고한다. 기본값은 <see cref="Const.REPORT_ELAPSED_MEAN_MS"/> </summary>
             [JsonProperty] public Int32 ReportElapsedMeanMS { get; internal set; }
 
             /// <summary> <see cref="IntervalMS"/> 동안 처리한 로그가 이 값보다 큰 경우 보고한다. 기본값은 <see cref="Const.REPORT_LOG_COUNT"/> </summary>
@@ -113,7 +113,7 @@ namespace KLogger.Configs
             /// <summary> 표기 시간(UTC)에 더할 시간(한국이면 +9). 기본값은 <see cref="Const.SLACK_UTC_ADD_HOUR"/> </summary>
             [JsonProperty] public Int32 UTCAddHour { get; internal set; }
 
-            /// <summary> 메시지의 순서 보장(100% 보장은 안됨). 보장(1), 미보장(0) 기본값은 <see cref="Const.SLACK_REPORTER_TRY_ORDERING_REPORT"/> </summary>
+            /// <summary> 메시지 순서 보장 시도(100% 보장은 안됨). 보장(1), 미보장(0) 기본값은 <see cref="Const.SLACK_REPORTER_TRY_ORDERING_REPORT"/> </summary>
             [JsonProperty] public Int32 TryOrderingReport { get; internal set; }
 
             public SlackConfig()
@@ -129,42 +129,42 @@ namespace KLogger.Configs
         /// <summary> 빌드 AssemblyVersion. </summary>
         [JsonProperty] public String AssemblyVersion { get; internal set; }
 
-        /// <summary> 빌드 당시의 git-hash. </summary>
+        /// <summary> 빌드 당시의 전체 git hash. </summary>
         [JsonProperty] public String GitHash { get; internal set; }
 
         #endregion
 
-        /// <summary> 식별자. 소문자로 강제 변환. </summary>
+        /// <summary> 식별자. 소문자로 변환된다. </summary>
         [JsonProperty] public String ID { get; internal set; }
 
-        /// <summary> 로그 처리(Tick) 스레드 수. 기본값은 <see cref="Const.WORK_THREAD_COUNT"/> </summary>
+        /// <summary> 로그 처리 스레드 수. 기본값은 <see cref="Const.WORK_THREAD_COUNT"/> </summary>
         [JsonProperty] public Int32 WorkThreadCount { get; internal set; }
 
-        /// <summary> 로그 처리(Tick) 동작 주기(ms). 기본값은 <see cref="Const.TICK_INTERVAL_MS"/> </summary>
-        [JsonProperty] public Int32 TickIntervalMS { get; internal set; }
+        /// <summary> 로그 처리 스레드의 루프 주기(ms). 기본값은 <see cref="Const.WORK_THREAD_INTERVAL_MS"/> </summary>
+        [JsonProperty] public Int32 WorkThreadIntervalMS { get; internal set; }
 
-        /// <summary> 전송 완료 로그 처리 동작 주기(ms). 기본값은 <see cref="Const.COMPLETE_LOG_INTERVAL_MS"/> </summary>
+        /// <summary> 처리 완료 로그의 통지 스레드 루프 주기(ms). 기본값은 <see cref="Const.COMPLETE_LOG_INTERVAL_MS"/> </summary>
         [JsonProperty] public Int32 CompletePutIntervalMS { get; internal set; }
 
-        /// <summary> 최대 연속 오류 횟수. 도달 시 로거 일시정지. 기본값은 <see cref="Const.MAX_SERIAL_ERROR_COUNT"/> </summary>
+        /// <summary> 최대 연속 오류 횟수. 도달 시 로거를 일시정지한다. 기본값은 <see cref="Const.MAX_SERIAL_ERROR_COUNT"/> </summary>
         [JsonProperty] public Int32 MaxSerialErrorCount { get; internal set; }
 
         /// <summary> 최대 로그 큐(Queue) 크기. 도달 시 로그를 추가(Push)할 수 없다. <see cref="UseThroughputControl"/> 이 켜져있다면 해당 큐의 크기도 포함한다. 기본값은 <see cref="Const.MAX_LOG_QUEUE_SIZE"/> </summary>
         [JsonProperty] public Int32 MaxLogQueueSize { get; internal set; }
 
-        /// <summary> 단일 로그 최대 크기. <see cref="Const.MAX_KINESIS_RECORD_BYTE"/> 보다 클 수 없다. 압축<see cref="CompressLogThresholdByte"/>) 을 사용하는 경우, 압축 이후의 크기를 사용한다. 기본값은 <see cref="Const.MAX_RECORD_BYTE"/> </summary>
+        /// <summary> 단일 로그의 최대 크기. <see cref="Const.MAX_KINESIS_RECORD_BYTE"/> 보다 클 수 없다. 압축(<see cref="CompressLogThresholdByte"/>)을 사용하는 경우, 압축 이후의 크기와 비교한다. 기본값은 <see cref="Const.MAX_RECORD_BYTE"/> </summary>
         [JsonProperty] public Int32 MaxRecordByte { get; internal set; }
 
-        /// <summary> 배치로 보낼 수 있는 최대 개수. <see cref="Const.MAX_KINESIS_BATCH_SIZE"/> 보다 클 수 없다. 기본값은 <see cref="Const.MAX_BATCH_SIZE"/> </summary>
+        /// <summary> 배치로 보낼 최대 로그 개수. <see cref="Const.MAX_KINESIS_BATCH_SIZE"/> 보다 클 수 없다. 기본값은 <see cref="Const.MAX_BATCH_SIZE"/> </summary>
         [JsonProperty] public Int32 MaxBatchSize { get; internal set; }
 
-        /// <summary> 배치로 보내기 위해 로그가 모이기를 대기하는 시간(ms). 너무 작으면 로그를 모아 보내지 못하게 된다. 기본값은 <see cref="Const.MAX_BATCH_WAIT_TIME_MS"/> </summary>
+        /// <summary> 배치로 보내기 위해 로그가 모이기를 기다리는 최대 시간(ms). 너무 작으면 배치 안의 로그 개수가 적어져 성능이 떨어진다. 기본값은 <see cref="Const.MAX_BATCH_WAIT_TIME_MS"/> </summary>
         [JsonProperty] public Int32 MaxBatchWaitTimeMS { get; internal set; }
 
         /// <summary> 최대 로그 재전송 횟수. 도달하면 로그를 버리고 통지. 기본값은 <see cref="Const.MAX_RETRY_SEND_COUNT"/> </summary>
         [JsonProperty] public Int32 MaxRetrySendCount { get; internal set; }
 
-        /// <summary> 변환한 로그가 이 값보다 크면 압축(Byte). 기본값은 <see cref="Const.COMPRESS_LOG_THRESHOLD_BYTE"/> </summary>
+        /// <summary> 로그가 이 값보다 크면 압축. 기본값은 <see cref="Const.COMPRESS_LOG_THRESHOLD_BYTE"/> </summary>
         [JsonProperty] public Int32 CompressLogThresholdByte { get; internal set; }
 
         /// <summary> 샤드 개수에 따른 전송량 제어 기능 on(1), off(0). 꺼져 있으면 최대한 많이 보내려고 노력한다. 기본값은 <see cref="Const.USE_THROUGHPUT_CONTROL"/> </summary>
@@ -179,7 +179,7 @@ namespace KLogger.Configs
         /// <summary> <see cref="SlackWebhook"/> 설정. </summary>
         [JsonProperty] public SlackConfig SlackConfigs { get; internal set; }
 
-        /// <summary> <see cref="Watcher"/>(모니터링) 설정. </summary>
+        /// <summary> <see cref="Watcher"/> 설정. </summary>
         [JsonProperty] public Watcher Watchers { get; internal set; }
 
         /// <summary> 푸시를 무시할 로그 타입의 초깃값. </summary>
@@ -188,20 +188,20 @@ namespace KLogger.Configs
         /// <summary> 리포터 타입. 기본값은 <see cref="Const.REPORTER_TYPE"/> </summary>
         [JsonProperty] [JsonConverter(typeof(StringEnumConverter))] public ReporterType ReporterType { get; internal set; }
 
-        /// <summary> 리포터 레벨. 기본값은 <see cref="Const.REPORT_LEVEL"/> </summary>
+        /// <summary> 리포트 레벨. 레벨 이상의 리포트만 전송한다. 기본값은 <see cref="Const.REPORT_LEVEL"/> </summary>
         [JsonProperty] [JsonConverter(typeof(StringEnumConverter))] public ReportLevelType ReportLevel { get; internal set; }
 
-        /// <summary> <see cref="Config"/> 자신을 문자열로 한 줄 변환. </summary>
+        /// <summary> <see cref="Config"/> 자신을 문자열로 한 줄로 변환한 결과. </summary>
         [JsonIgnore] public String ConfigString { get; internal set; }
 
-        /// <summary> <see cref="Config"/> 자신을 문자열로 보기좋게 변환. </summary>
+        /// <summary> <see cref="Config"/> 자신을 문자열로 보기좋게 변환한 결과. </summary>
         [JsonIgnore] public String ConfigStringPretty { get; internal set; }
 
         public Config()
         {
             // 설정 파일에 없는 항목은 기본값이 사용된다.
             WorkThreadCount = Const.WORK_THREAD_COUNT;
-            TickIntervalMS = Const.TICK_INTERVAL_MS;
+            WorkThreadIntervalMS = Const.WORK_THREAD_INTERVAL_MS;
             CompletePutIntervalMS = Const.COMPLETE_LOG_INTERVAL_MS;
             MaxSerialErrorCount = Const.MAX_SERIAL_ERROR_COUNT;
             MaxLogQueueSize = Const.MAX_LOG_QUEUE_SIZE;
@@ -220,7 +220,7 @@ namespace KLogger.Configs
         /// <summary>
         /// <see cref="Config"/> 인스턴스를 파일로부터 생성한다.
         /// </summary>
-        /// <param name="configPath"> 파일 경로. </param>
+        /// <param name="configPath"> 설정 파일 경로. </param>
         /// <returns> 생성한 Config. </returns>
         public static Config Create(String configPath)
         {

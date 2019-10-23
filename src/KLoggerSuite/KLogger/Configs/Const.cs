@@ -11,7 +11,7 @@ namespace KLogger.Configs
 
         // https://docs.aws.amazon.com/ko_kr/kinesis/latest/APIReference/API_PutRecords.html
         // https: //aws.amazon.com/ko/kinesis/data-streams/pricing
-        #region AWS 제약이므로 수정하지 않는다
+        #region AWS 제약이므로 스펙 변경이 공식적으로 발표되면 수정한다
 
         /// <summary> Kinesis에 배치로 보낼 수 있는 최대 개수. 500(AWS 제약). </summary>
         public const Int32 MAX_KINESIS_BATCH_SIZE = 500;
@@ -32,8 +32,8 @@ namespace KLogger.Configs
         /// <summary> <see cref="Config.WorkThreadCount"/> 의 기본값. </summary>
         public const Int32 WORK_THREAD_COUNT = 2;
 
-        /// <summary> <see cref="Config.TickIntervalMS"/> 의 기본값. </summary>
-        public const Int32 TICK_INTERVAL_MS = 33;
+        /// <summary> <see cref="Config.WorkThreadIntervalMS"/> 의 기본값. </summary>
+        public const Int32 WORK_THREAD_INTERVAL_MS = 33;
 
         /// <summary> <see cref="Config.CompletePutIntervalMS"/> 의 기본값. </summary>
         public const Int32 COMPLETE_LOG_INTERVAL_MS = 200;

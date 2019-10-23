@@ -153,7 +153,7 @@ namespace KLogger.Cores.Loggers
         {
             if (Reporter == null)
             {
-                throw new LoggerStartException(StartResultType.Invalid); // 초기화 실수.
+                throw new LoggerStartException(StartResultType.Undefined); // 초기화 실수.
             }
 
             ErrorCounter = new ErrorCounter(Reporter, Config.MaxSerialErrorCount, Pause);
@@ -265,7 +265,7 @@ namespace KLogger.Cores.Loggers
         {
             for (Int32 i = 0; i < Config.WorkThreadCount; ++i)
             {
-                var thread = new NaiveLoopThread(Tick, Config.TickIntervalMS, e => ErrorCounter.RaiseError(e), $"{nameof(Tick)}:{i}");
+                var thread = new NaiveLoopThread(Tick, Config.WorkThreadIntervalMS, e => ErrorCounter.RaiseError(e), $"{nameof(Tick)}:{i}");
                 _loggerThreads.Add(thread);
                 thread.Start();
             }

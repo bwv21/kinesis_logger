@@ -3,11 +3,11 @@
 namespace KLogger.Types
 {
     /// <summary>
-    /// 로거의 로그 인터페이스.
+    /// 로거가 다루는 로그 인터페이스.
     /// </summary>
     public interface ILog
     {
-        /// <summary> Push할 때 리턴한 값. </summary>
+        /// <summary> Push할 때 리턴한 값. 하나의 로거 인스턴스 안에서만 유일함을 보장한다. </summary>
         Int64 Sequence { get; }
 
         /// <summary> Push할 때의 Timestamp(UTC). </summary>

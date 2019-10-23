@@ -4,17 +4,17 @@ namespace KLogger.Types
 {
     /// <summary>
     /// <para> 로그 전송의 최종 완료 콜백으로 여러 스레드에서 불릴 수 있으며 순서를 보장하지 않는다. </para>
-    /// 로거의 설정(<see cref="CompletePutNoticeType"/>)에 값에 따라 통지가 오지 않거나 특정 타입의 통지만 온다.
+    /// 설정(<see cref="CompletePutNoticeType"/>) 값에 따라 통지가 오지 않거나 특정 처리 결과의 통지만 온다.
     /// </summary>
-    /// <param name="completePuts">
-    /// 한 개 이상의 완료(성공 또는 실패)한 로그 정보를 담고있다.
+    /// <param name="completePutNotices">
+    /// 한 개 이상의 처리를 완료한 로그.
     /// </param>
-    public delegate void NoticeCompletePutDelegate(IEnumerable<CompletePutNotice> completePuts);
+    public delegate void NoticeCompletePutDelegate(IEnumerable<CompletePutNotice> completePutNotices);
 
-    /// <summary> 통지받을 로그 처리 결과의 타입. <see cref="NoticeCompletePutDelegate"/> 에 언제 통지할지를 결정한다. </summary>
+    /// <summary> <see cref="NoticeCompletePutDelegate"/> 에서 통지받을 결과의 종류. </summary>
     public enum CompletePutNoticeType
     {
-        /// <summary> 모든 통지를 받지 않는다. </summary>
+        /// <summary> 통지를 받지 않는다. </summary>
         None = -1,
 
         /// <summary> 실패(<see cref="CompletePutNoticeResultType.Success"/> 외 나머지) 통지만 받는다(권장). </summary>
@@ -23,7 +23,7 @@ namespace KLogger.Types
         /// <summary> 성공(<see cref="CompletePutNoticeResultType.Success"/>) 통지만 받는다. </summary>
         SuccessOnly,
 
-        /// <summary> 성공 또는 실패의 모든 통지를 받는다. </summary>
+        /// <summary> 모든(성공, 실패) 통지를 받는다. </summary>
         Both
     }
 
@@ -64,7 +64,7 @@ namespace KLogger.Types
         Fatal
     }
 
-    /// <summary> 로거의 현재 상태. </summary>
+    /// <summary> 로거의 상태. </summary>
     public enum StateType
     {
         /// <summary> 정지 및 초기 상태. </summary>
@@ -83,24 +83,25 @@ namespace KLogger.Types
         Pause
     }
 
-    /// <summary> 로거의 시작(<see cref="KLoggerAPI.Start"/>) 결과 리턴 타입. </summary>
+    /// <summary> 로거의 시작(<see cref="KLoggerAPI.Start"/>) 호출 리턴 타입. </summary>
     public enum StartResultType
     {
-        Invalid = -1,
+        /// <summary> 정의되지 않음. </summary>
+        Undefined = -1,
 
         /// <summary> 시작 성공. </summary>
         Success = 0,
 
-        /// <summary> 정지해 있지 않은 로거를 시작. </summary>
+        /// <summary> 시작 실패. 정지해 있지 않은 로거를 시작. </summary>
         NotStopped,
 
-        /// <summary> <see cref="Configs.Config"/> 에 오류가 있음. </summary>
+        /// <summary> 시작 실패. <see cref="Configs.Config"/> 에 오류가 있음. </summary>
         InvalidConfig,
 
-        /// <summary> <see cref="Configs.Config.SlackConfig"/> 에 오류가 있음. </summary>
+        /// <summary> 시작 실패. <see cref="Configs.Config.SlackConfig"/> 에 오류가 있음. </summary>
         InvalidSlackWebhookUrl,
 
-        /// <summary> <see cref="Configs.Config.ReporterType"/> 이 올바르지 않음. </summary>
+        /// <summary> 시작 실패. <see cref="Configs.Config.ReporterType"/> 이 올바르지 않음. </summary>
         InvalidReporterType,
     }
 
@@ -110,13 +111,13 @@ namespace KLogger.Types
         /// <summary> 전송 성공. </summary>
         Success = 0,
 
-        /// <summary> 로그 인코딩에 실패. </summary>
+        /// <summary> 전송 실패. 로그 인코딩 실패. </summary>
         FailEncode,
 
-        /// <summary> 인코딩 후 압축까지 했는데도 <see cref="Configs.Config.MaxRecordByte"/> 보다 커서 전송에 실패. </summary>
+        /// <summary> 전송 실패. 로그를 압축해도 <see cref="Configs.Config.MaxRecordByte"/> 보다 큼. </summary>
         TooLargeLogSize,
 
-        /// <summary> 재전송 횟수가 <see cref="Configs.Config.MaxRetrySendCount"/> 에 도달하여 실패. </summary>
+        /// <summary> 전송 실패. 재전송 횟수가 <see cref="Configs.Config.MaxRetrySendCount"/> 에 도달. </summary>
         FailRetry
     }
 }
