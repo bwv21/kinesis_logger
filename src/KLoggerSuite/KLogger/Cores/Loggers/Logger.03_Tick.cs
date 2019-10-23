@@ -219,9 +219,9 @@ namespace KLogger.Cores.Loggers
 
         private Boolean CheckTooLargeLogSize(Byte[] encodedLog)
         {
-            // 직접 1바이트 추가하며 테스트.
-            // encodedLog.Length 이 1048577 이 되는 순간 실패(1048576 까진 괜찮음)
-            // 스루풋과 달리 Post 변환 전 순수 데이터로만 계산이 맞음을 확인.
+            // 직접 1바이트씩 추가하며 테스트.
+            // encodedLog.Length 이 1048577 이 되는 순간 실패(1048576 까진 괜찮음).
+            // Post 변환 전 데이터로 계산한다.
             return Config.MaxRecordByte < encodedLog.Length;
         }
 
