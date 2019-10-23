@@ -66,7 +66,7 @@ namespace KLoggerTests.Cases
         {
             _kLoggerConfig = Config.Create(CONFIG_PATH);
             _kLoggerConfig.ReporterType = ReporterType.Console;
-            //_kLoggerConfig.ReporterType = ReporterType.Slack;
+            _kLoggerConfig.ReportLevel = ReportLevelType.Debug;
             return _kLoggerConfig;
         }
 

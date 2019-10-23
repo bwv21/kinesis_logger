@@ -33,7 +33,7 @@ namespace KLogger.Configs
         public const Int32 WORK_THREAD_COUNT = 2;
 
         /// <summary> <see cref="Config.TickIntervalMS"/> 의 기본값. </summary>
-        public const Int32 TICK_INTERVAL_MS = 32;
+        public const Int32 TICK_INTERVAL_MS = 33;
 
         /// <summary> <see cref="Config.CompletePutIntervalMS"/> 의 기본값. </summary>
         public const Int32 COMPLETE_LOG_INTERVAL_MS = 200;
@@ -57,7 +57,7 @@ namespace KLogger.Configs
         public const Int32 MAX_RETRY_SEND_COUNT = 10;
 
         /// <summary> <see cref="Config.CompressLogThresholdByte"/> 의 기본값. </summary>
-        public const Int32 COMPRESS_LOG_THRESHOLD_BYTE = 1000;
+        public const Int32 COMPRESS_LOG_THRESHOLD_BYTE = 1024;
 
         /// <summary> <see cref="Config.CompressLogThresholdByte"/> 의 기본값. </summary>
         public const Int32 USE_IGNORE_LOG_TYPES = 1;
@@ -84,7 +84,7 @@ namespace KLogger.Configs
         public const Int32 SLACK_REPORTER_TRY_ORDERING_MESSAGE = 1;
 
         /// <summary> <see cref="Config.ReportLevel"/> 의 기본값. </summary>
-        public const ReportLevelType REPORT_LEVEL = ReportLevelType.Debug;
+        public const ReportLevelType REPORT_LEVEL = ReportLevelType.Warn;
 
         /// <summary> <see cref="Config.ReporterType"/> 의 기본값. </summary>
         public const ReporterType REPORTER_TYPE = ReporterType.None;

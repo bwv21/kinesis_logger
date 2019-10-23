@@ -301,15 +301,21 @@ namespace KLogger.Configs
             ConfigString = JsonConvert.SerializeObject(this);
             ConfigStringPretty = JsonConvert.SerializeObject(this, Formatting.Indented);
 
+            // 원본 대신에 복호화한 것을 부분적으로 보여준다. 원본도 보여주려 했는데 너무 길어서 보기가 좋지 않았다.
             String accessID = AWSs.DecryptedAccessID;
             String secretKey = AWSs.DecryptedSecretKey;
 
             String safeAccessID = accessID.HideString(SHOW_LENGTH, true);
             String safeSecretKey = secretKey.HideString(SHOW_LENGTH, true);
 
-            // 원본 대신에 복호화한 것을 부분적으로 보여준다. 원본도 보여주려 했는데 너무 길어서 보기가 좋지 않았다.
             ConfigString = ConfigString.Replace(AWSs.AccessID, $"{safeAccessID}").Replace(AWSs.SecretKey, $"{safeSecretKey}");
             ConfigStringPretty = ConfigStringPretty.Replace(AWSs.AccessID, $"{safeAccessID}").Replace(AWSs.SecretKey, $"{safeSecretKey}");
+
+            // 슬랙의 WebhookUrl도 확인만 가능하도록 일부분만 보여준다.
+            String[] tokens = SlackConfigs.WebhookUrl.Split('/');
+            String showString = $@".../{tokens[tokens.Length - 1].HideString(SHOW_LENGTH, true)}";
+            ConfigString = ConfigString.Replace(SlackConfigs.WebhookUrl, showString);
+            ConfigStringPretty = ConfigStringPretty.Replace(SlackConfigs.WebhookUrl, showString);
         }
     }
 }
