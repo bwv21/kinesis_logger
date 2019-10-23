@@ -256,6 +256,12 @@ namespace KLogger.Cores.Loggers
                 return;
             }
 
+            if (State == StateType.Stopping)
+            {
+                Putter.Put(putLog);
+                return;
+            }
+
             if (Config.UseThroughputControl == 1)
             {
                 ThroughputController.Push(putLog);
