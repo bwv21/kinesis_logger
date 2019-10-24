@@ -33,6 +33,8 @@ namespace KLogger.Libs
             if (_cancellationToken.IsCancellationRequested == false)
             {
                 _cancellationTokenSource?.Cancel();
+                _cancellationTokenSource?.Dispose();
+
                 _onError?.Invoke($"{nameof(NaiveLoopThread)} Missing Stop!");
             }
         }
@@ -102,6 +104,8 @@ namespace KLogger.Libs
             {
                 try
                 {
+                    cancelled = _cancellationToken.WaitHandle.WaitOne(TimeSpan.FromMilliseconds(sleepMS));
+
                     _stopwatch.Restart();
 
                     _loop();
@@ -120,16 +124,12 @@ namespace KLogger.Libs
 
                     _onError?.Invoke($"{exception.Message}\n{exception.StackTrace}");
                 }
-                finally
-                {
-                    cancelled = _cancellationToken.WaitHandle.WaitOne(TimeSpan.FromMilliseconds(sleepMS));
-                }
             }
-
-            DebugLog.Log($"{_name} {nameof(NaiveLoopThread)} END", "klogger:thread");
 
             _cancellationTokenSource.Dispose();
             _thread = null;
+
+            DebugLog.Log($"{_name} {nameof(NaiveLoopThread)} END", "klogger:thread");
         }
     }
 }
