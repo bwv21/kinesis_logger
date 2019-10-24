@@ -30,5 +30,17 @@ namespace KLogger.Cores.Loggers
             : this(Config.Create(configPath), noticeCompletePut, completePutNoticeType)
         {
         }
+
+        ~Logger()
+        {
+            if (State != StateType.Start)
+            {
+                return;
+            }
+
+            Reporter?.Warn("Logger is not stopped!", null, "Finalize");
+
+            Stop();
+        }
     }
 }
