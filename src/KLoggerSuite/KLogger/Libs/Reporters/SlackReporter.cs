@@ -67,7 +67,7 @@ namespace KLogger.Libs.Reporters
             if (_thread != null)
             {
                 _slackWebhook?.SendSync(_channelWarn, nameof(SlackReporter), "Finalize-Warning", $"Missing {nameof(CleanupAndWaitForAsyncSend)}()", "warning", null, true);
-                _thread.Stop();
+                _thread?.Stop();
             }
         }
 

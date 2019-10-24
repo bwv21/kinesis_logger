@@ -30,9 +30,9 @@ namespace KLogger.Libs
 
         ~NaiveLoopThread()
         {
-            if (_cancellationTokenSource.IsCancellationRequested == false)
+            if (_cancellationToken.IsCancellationRequested == false)
             {
-                _cancellationTokenSource.Cancel();
+                _cancellationTokenSource?.Cancel();
                 _onError?.Invoke($"{nameof(NaiveLoopThread)} Missing Stop!");
             }
         }

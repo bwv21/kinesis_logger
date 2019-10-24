@@ -33,14 +33,12 @@ namespace KLogger.Cores.Loggers
 
         ~Logger()
         {
-            if (State != StateType.Start)
+            if (State != StateType.Stop)
             {
-                return;
+                // Finalizer에서 Stop을 불러도 되는지 확실하지 않아 경고만 하고 Stop을 부르지 않았다.
+                // 일반적으로 로거는 프로그램과 수명을 같이하므로 Stop을 빼먹어도 큰 문제가 되지 않을 것이다.
+                Reporter?.Warn($"Logger is not Stopped! - {State.ToString()}", null, "Finalize");
             }
-
-            Reporter?.Warn("Logger is not stopped!", null, "Finalize");
-
-            Stop();
         }
     }
 }
