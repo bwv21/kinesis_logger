@@ -72,7 +72,7 @@ namespace KLogger
         /// 처리 완료한 로그에 대한 콜백(<see cref="NoticeCompletePutDelegate"/>).
         /// </param>
         /// <param name="completePutNoticeType">
-        /// <see cref="noticeCompletePut"/> 으로 통지받을 결과 종류.
+        /// 통지받을 결과 종류.
         /// </param>
         public KLoggerAPI(Config config, NoticeCompletePutDelegate noticeCompletePut, CompletePutNoticeType completePutNoticeType = CompletePutNoticeType.FailOnly)
         {

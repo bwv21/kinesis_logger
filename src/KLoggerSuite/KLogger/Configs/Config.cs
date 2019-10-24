@@ -19,6 +19,7 @@ namespace KLogger.Configs
     /// </summary>
     public class Config
     {
+        /// <summary> AWS 설정. </summary>
         public class AWS
         {
             /// <summary> Kinesis 의 Region. </summary>
@@ -57,6 +58,7 @@ namespace KLogger.Configs
             }
         }
 
+        /// <summary> 로거의 모니터링. </summary>
         public class Watcher
         {
             /// <summary> 모니터링 동작 주기. 기본값은 <see cref="Const.WATCHER_INTERVAL_MS"/> </summary>
@@ -74,7 +76,7 @@ namespace KLogger.Configs
             /// <summary> <see cref="IntervalMS"/> 동안 로그 큐의 크기 표준편차가 이 값보다 큰 경우 보고한다. 기본값은 <see cref="Const.REPORT_QUEUE_STD_DEV"/> </summary>
             [JsonProperty] public Int32 ReportQueueStdDev { get; internal set; }
 
-            public Watcher()
+            internal Watcher()
             {
                 IntervalMS = Const.WATCHER_INTERVAL_MS;
                 ReportElapsedMeanMS = Const.REPORT_ELAPSED_MEAN_MS;
@@ -83,7 +85,8 @@ namespace KLogger.Configs
                 ReportQueueStdDev = Const.REPORT_QUEUE_STD_DEV;
             }
         }
-        
+
+        /// <summary> 슬랙 리포터를 위한 설정. </summary>
         public class SlackConfig
         {
             /// <summary> 보내는 사람(username) 앞에 붙을 접두사. </summary>
@@ -116,7 +119,7 @@ namespace KLogger.Configs
             /// <summary> 메시지 순서 보장 시도(100% 보장은 안됨). 보장(1), 미보장(0) 기본값은 <see cref="Const.SLACK_REPORTER_TRY_ORDERING_REPORT"/> </summary>
             [JsonProperty] public Int32 TryOrderingReport { get; internal set; }
 
-            public SlackConfig()
+            internal SlackConfig()
             {
                 IconEmoji = null;
                 UTCAddHour = Const.SLACK_UTC_ADD_HOUR;
@@ -197,7 +200,7 @@ namespace KLogger.Configs
         /// <summary> <see cref="Config"/> 자신을 문자열로 보기좋게 변환한 결과. </summary>
         [JsonIgnore] public String ConfigStringPretty { get; internal set; }
 
-        public Config()
+        internal Config()
         {
             // 설정 파일에 없는 항목은 기본값이 사용된다.
             WorkThreadCount = Const.WORK_THREAD_COUNT;

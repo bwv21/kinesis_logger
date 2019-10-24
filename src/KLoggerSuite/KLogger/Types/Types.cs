@@ -30,13 +30,17 @@ namespace KLogger.Types
     /// <summary> 로거 바이너리 빌드 타입. </summary>
     public enum BuildType
     {
+        /// <summary> Debug 빌드. </summary>
         Debug,
+
+        /// <summary> Release 빌드. </summary>
         Release
     }
 
     /// <summary> 로거의 리포터 타입. </summary>
     public enum ReporterType
     {
+        /// <summary> 사용하지 않는다. </summary>
         InvalidMin,
 
         /// <summary> 리포터 없음. 어디에도 출력하지 않는다. </summary>
@@ -51,16 +55,26 @@ namespace KLogger.Types
         /// <summary> 슬랙의 웹훅을 사용하여 출력한다. <see cref="Configs.Config.SlackConfig"/> 설정이 필요하다. </summary>
         Slack,
 
+        /// <summary> 사용하지 않는다. </summary>
         InvalidMax
     }
 
     /// <summary> 로거의 리포터 레벨. 레벨 이상의 로그만 출력한다. </summary>
     public enum ReportLevelType
     {
+        /// <summary> Debug 레벨. </summary>
         Debug,
+
+        /// <summary> Info 레벨. </summary>
         Info,
+
+        /// <summary> Warn 레벨. </summary>
         Warn,
+
+        /// <summary> Error 레벨. </summary>
         Error,
+
+        /// <summary> Fatal 레벨. </summary>
         Fatal
     }
 
