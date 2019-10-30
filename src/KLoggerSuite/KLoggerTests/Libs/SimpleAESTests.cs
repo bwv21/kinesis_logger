@@ -18,11 +18,11 @@ namespace KLoggerTests.Libs
             Byte[] kek = new Byte[SimpleAES.AES_KEY_SIZE];
             Encoding.UTF8.GetBytes(KEK_STRING).ToArray().CopyTo(kek, 0);
 
-            Byte[] encrypt = SimpleAES.Encrypt(PLAIN_TEXT, kek);
+            Byte[] encrypted = SimpleAES.Encrypt(PLAIN_TEXT, kek);
 
-            String decrypt = SimpleAES.Decrypt(encrypt, kek);
+            String decrypted = SimpleAES.Decrypt(encrypted, kek);
 
-            Assert.IsTrue(PLAIN_TEXT == decrypt);
+            Assert.IsTrue(PLAIN_TEXT == decrypted);
 
             Assert.ThrowsException<ArgumentNullException>(() => SimpleAES.Encrypt(null, kek));
 
@@ -30,7 +30,7 @@ namespace KLoggerTests.Libs
 
             Assert.ThrowsException<ArgumentNullException>(() => SimpleAES.Decrypt(null, kek));
 
-            Assert.ThrowsException<ArgumentNullException>(() => SimpleAES.Decrypt(encrypt, null));
+            Assert.ThrowsException<ArgumentNullException>(() => SimpleAES.Decrypt(encrypted, null));
         }
     }
 }
