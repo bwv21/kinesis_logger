@@ -101,8 +101,25 @@ namespace KLogger.Cores.Components
             catch (Exception exception)
             {
                 _errorCounter.RaiseError($"{exception.Message}\n{exception.InnerException?.Message}");
-                throw;
+
+                // 여기서 예외는 재시도해도 소용없기 때문에 로그를 바로 버린다.
+                DropLog(putContext.PutLog, putContext.RetryCount);
             }
+        }
+
+        private void DropLog(PutLog putLog, Int32 retryCount)
+        {
+            Boolean success = _completePutNotifier.Push(putLog.RawLogs, CompletePutNoticeResultType.FailRetry);
+            if (success == false)
+            {
+                _reporter.Error($"Fail CompletePutNotifier.Push ({putLog.RawLogs.Length})");
+            }
+
+            _watcher.DropLog(putLog.RawLogs.Length);
+
+            _reporter.Error($"Drop Log: {putLog.RawLogs.Length}, RetryCount: {retryCount}");
+
+            DebugLog.Log($"Drop Log({putLog.EncodedLogs.Length}, {putLog.TotalEncodedLogByte}).", "klogger:putter");
         }
 
         private void OnPutRequestCompleted(UploadDataCompletedEventArgs args, Object context)
@@ -134,14 +151,15 @@ namespace KLogger.Cores.Components
         // HTTP통신의 완료 콜백(비동기, 다른 스레드 가능성). HTTP통신이 성공해도 Kinesis전송도 성공한 것은 아니다.
         private void OnPutRequestCompletedImpl(String error, String uploadResult, PutContext putContext)
         {
-            Boolean uploadSuccess = false;
+            Boolean success = false;
 
             try
             {
                 if (String.IsNullOrEmpty(error))
                 {
-                    uploadSuccess = true;
                     PostUploadDataCompleted(uploadResult, putContext);
+
+                    success = true;
                 }
                 else
                 {
@@ -158,8 +176,10 @@ namespace KLogger.Cores.Components
             }
             finally
             {
-                if (uploadSuccess == false)
+                if (success == false)
                 {
+                    // 전송은 성공했지만 PostUploadDataCompleted 에서 예외가 발생하면 로그를 다시 보낼 수도 있다.
+                    // 발생 가능성이 낮고 완벽한 보장도 어렵기 때문에 허용한다(조회에서 같은 로그인지 구별할 수 있다).
                     RetryPutLog(putContext.PutLog, putContext.RetryCount);
                 }
             }
@@ -297,21 +317,6 @@ namespace KLogger.Cores.Components
 
             // 대부분 ProvisionedThroughputExceededException 오류이므로 기다렸다 재시도한다.
             ThreadPool.QueueUserWorkItem(_ => SleepAndPut(putLog, retryCount + 1));
-        }
-
-        private void DropLog(PutLog putLog, Int32 retryCount)
-        {
-            Boolean isSuccess = _completePutNotifier.Push(putLog.RawLogs, CompletePutNoticeResultType.FailRetry);
-            if (isSuccess == false)
-            {
-                _reporter.Error($"Fail CompletePutNotifier.Push ({putLog.RawLogs.Length})");
-            }
-
-            _watcher.DropLog(putLog.RawLogs.Length);
-
-            _reporter.Error($"Loss Log: {putLog.RawLogs.Length}, RetryCount: {retryCount}");
-
-            DebugLog.Log($"Drop Log({putLog.EncodedLogs.Length}, {putLog.TotalEncodedLogByte}).", "klogger:putter");
         }
 
         private void SleepAndPut(PutLog putLog, Int32 retryCount)
