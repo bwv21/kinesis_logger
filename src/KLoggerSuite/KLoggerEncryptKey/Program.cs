@@ -9,8 +9,6 @@ namespace KLoggerEncryptKey
     {
         private static void Main(String[] args)
         {
-            Test();
-
             Console.Write("KEK: ");
             String kekString = Console.ReadLine();
             Console.Write("Key: ");
@@ -22,16 +20,15 @@ namespace KLoggerEncryptKey
                 return;
             }
 
-            Byte[] kekBytes = new Byte[SimpleAES.AES_KEY_SIZE];
+            Byte[] kekBytes = new Byte[SimpleAES4String.AES_KEY_SIZE];
             Encoding.UTF8.GetBytes(kekString).ToArray().CopyTo(kekBytes, 0);
 
             try
             {
-                Byte[] encryptedKey = SimpleAES.Encrypt(keyString, kekBytes);
-                String encryptedKeyString = Convert.ToBase64String(encryptedKey);
-                Console.WriteLine("Encrypted Key: " + encryptedKeyString);
+                String encryptedKey = SimpleAES4String.Encrypt(keyString, kekString);
+                Console.WriteLine("Encrypted Key: " + encryptedKey);
 
-                String plainKey = SimpleAES.Decrypt(encryptedKey, kekBytes);
+                String plainKey = SimpleAES4String.Decrypt(encryptedKey, kekString);
                 if (String.CompareOrdinal(keyString, plainKey) != 0)
                 {
                     Console.WriteLine("Fail Test!!!");
@@ -45,24 +42,6 @@ namespace KLoggerEncryptKey
 
             Console.WriteLine("ok.");
             Console.ReadLine();
-        }
-
-        private static void Test()
-        {
-            const String KEK_STRING = "test-kek";
-            const String PLAIN_TEXT = "O5X3j3OeNw6/uHN+J/1HY6B3zyo8EOMAisfKbzyPt4Y=";
-
-            Byte[] kek = new Byte[SimpleAES.AES_KEY_SIZE];
-            Encoding.UTF8.GetBytes(KEK_STRING).ToArray().CopyTo(kek, 0);
-
-            Byte[] encrypt = SimpleAES.Encrypt(PLAIN_TEXT, kek);
-
-            String decrypt = SimpleAES.Decrypt(encrypt, kek);
-
-            if (PLAIN_TEXT != decrypt)
-            {
-                throw new Exception("Fail AES Test!");
-            }
         }
     }
 }

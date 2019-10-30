@@ -63,7 +63,7 @@
     <Compile Include="Cases\FlushQueueByStopTests.cs" />
     <Compile Include="Cases\KloggerTests.cs" />
     <Compile Include="Libs\NaiveLoopThreadTests.cs" />
-    <Compile Include="Libs\SimpleAESTests.cs" />
+    <Compile Include="Libs\SimpleAES4StringTests.cs" />
     <Compile Include="Libs\StringCompressorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Cases\PauseAndResumeTests.cs" />

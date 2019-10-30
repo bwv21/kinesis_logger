@@ -45,14 +45,8 @@ namespace KLogger.Configs
 
             internal void DecryptAccessIDAndSecretKey()
             {
-                Byte[] kekBytes = new Byte[SimpleAES.AES_KEY_SIZE];
-                Encoding.UTF8.GetBytes(KEK).ToArray().CopyTo(kekBytes, 0);
-
-                Byte[] accessIDBytes = Convert.FromBase64String(AccessID);
-                Byte[] secretKeyBytes = Convert.FromBase64String(SecretKey);
-
-                DecryptedAccessID = SimpleAES.Decrypt(accessIDBytes, kekBytes);
-                DecryptedSecretKey = SimpleAES.Decrypt(secretKeyBytes, kekBytes);
+                DecryptedAccessID = SimpleAES4String.Decrypt(AccessID, KEK);
+                DecryptedSecretKey = SimpleAES4String.Decrypt(SecretKey, KEK);
 
                 KEK = KEK.HideString(1, true);  // 사용이 끝나고 가린다(Config 조회 시 가리는 효과).
             }

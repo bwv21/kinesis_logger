@@ -99,7 +99,7 @@
     <Compile Include="Libs\JsonSerializer.cs" />
     <Compile Include="Libs\Rand.cs" />
     <Compile Include="Libs\SequenceGenerator.cs" />
-    <Compile Include="Libs\SimpleAES.cs" />
+    <Compile Include="Libs\SimpleAES4String.cs" />
     <Compile Include="Libs\StringCompressor.cs" />
     <Compile Include="Libs\Now.cs" />
     <Compile Include="Libs\AWS\Auth\AWS4SignerBase.cs" />
