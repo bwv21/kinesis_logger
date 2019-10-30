@@ -184,7 +184,10 @@ namespace KLogger.Cores.Components
 
         internal void EnableForceReport()
         {
-            _temporalCounter.ForceReportFlag = true;
+            lock (_lock)
+            {
+                _temporalCounter.ForceReportFlag = true;
+            }
         }
 
         internal void ReportLogTypeToCount()
@@ -220,12 +223,15 @@ namespace KLogger.Cores.Components
 
         private void RecordLogQueue()
         {
-            Int32 queueCount = _logger.LogCountInQueue;
-            _temporalCounter.QueueCounts.Add(queueCount);
-
-            if (_temporalCounter.QueueCountPeak < queueCount)
+            lock (_lock)
             {
-                _temporalCounter.QueueCountPeak = queueCount;
+                Int32 queueCount = _logger.LogCountInQueue;
+                _temporalCounter.QueueCounts.Add(queueCount);
+
+                if (_temporalCounter.QueueCountPeak < queueCount)
+                {
+                    _temporalCounter.QueueCountPeak = queueCount;
+                }
             }
         }
 
