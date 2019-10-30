@@ -15,7 +15,7 @@ namespace KLogger.Configs
 {
     /// <summary>
     /// <para> 로거의 설정. <see cref="Config.Create"/> 로 생성한다. </para>
-    /// 설정 파일에 없는 항목은 기본값이 사용된다.
+    /// 파일에 없는 항목은 기본값이 사용된다.
     /// </summary>
     public class Config
     {

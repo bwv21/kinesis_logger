@@ -51,7 +51,7 @@ namespace KLogger.Cores.Components
                 }
                 else
                 {
-                    // String 이지만 JSON으로 변환된 상태이므로 그대로 전송한다.
+                    // String이지만 JSON으로 변환된 상태이므로 그대로 전송한다.
                     logObjectStr = str;
                 }
             }
