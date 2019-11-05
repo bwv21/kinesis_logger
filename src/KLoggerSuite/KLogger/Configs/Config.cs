@@ -123,12 +123,9 @@ namespace KLogger.Configs
 
         #region Not From File
 
-        /// <summary> 빌드 AssemblyVersion. </summary>
+        /// <summary> 빌드 버전 정보. </summary>
         [JsonProperty] public String AssemblyVersion { get; internal set; }
-
-        /// <summary> 빌드 당시의 전체 git hash. </summary>
-        [JsonProperty] public String GitHash { get; internal set; }
-
+        
         #endregion
 
         /// <summary> 식별자. 소문자로 변환된다. </summary>
@@ -279,7 +276,6 @@ namespace KLogger.Configs
         {
             Assembly assembly = Assembly.GetExecutingAssembly();
             AssemblyVersion = assembly.GetName().Version.ToString();
-            GitHash = FileVersionInfo.GetVersionInfo(assembly.Location).ProductVersion;
         }
 
         private void ToLowerIgnoreLogTypes()

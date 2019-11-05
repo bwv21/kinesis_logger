@@ -65,7 +65,6 @@ namespace KLogger.Cores.Loggers
 
             Reporter.Fatal("*Start Logger!*\n"                               +
                            $"Assembly Version: `{Config.AssemblyVersion}`\n" +
-                           $"Git Hash: `{Config.GitHash}`\n"                 +
                            $"Build: `{BuildType}`\n"                         +
                            $"InstanceID: `{InstanceID}`\n"                   +
                            $"```Config\n{Config.ConfigStringPretty}```");
