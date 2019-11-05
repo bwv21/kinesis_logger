@@ -31,8 +31,10 @@ namespace KLogger.Libs
         private static Int32 MakeSeed()
         {
 #if DEBUG
+
             return 0;
-#endif
+
+#else
 
             Int64 seed = Environment.TickCount;
 
@@ -68,6 +70,7 @@ namespace KLogger.Libs
 
                 return (Int32)seed;
             }
+#endif
         }
     }
 }
