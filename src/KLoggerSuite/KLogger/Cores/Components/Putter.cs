@@ -164,15 +164,11 @@ namespace KLogger.Cores.Components
                 else
                 {
                     _errorCounter.RaiseError(error);
-
-                    DebugLog.Log(error, "klogger:putter");
                 }
             }
             catch (Exception exception)
             {
                 _errorCounter.RaiseError($"{exception.Message}\n{exception.InnerException?.Message}");
-
-                DebugLog.Log($"{exception.Message}/{exception.InnerException?.Message}", "klogger:putter");
             }
             finally
             {

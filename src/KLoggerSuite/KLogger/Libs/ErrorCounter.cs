@@ -32,12 +32,12 @@ namespace KLogger.Libs
             Interlocked.Increment(ref _serialErrorCount);
             Interlocked.Increment(ref _totalErrorCount);
 
+            DebugLog.Log($"{message} ({Path.GetFileName(sourceFilePath)}:{ sourceLineNumber.ToString()}) - {_serialErrorCount}/{_totalErrorCount}");
+
             if (report)
             {
                 _reporter?.Error($"[Error] {message} `{Path.GetFileName(sourceFilePath)}:{ sourceLineNumber.ToString()}` (`{_serialErrorCount}/{_totalErrorCount}`)");
             }
-
-            DebugLog.Log($"{message} ({Path.GetFileName(sourceFilePath)}:{ sourceLineNumber.ToString()}) - {_serialErrorCount}/{_totalErrorCount}");
 
             if (_maxSerialErrorCount <= _serialErrorCount)
             {
