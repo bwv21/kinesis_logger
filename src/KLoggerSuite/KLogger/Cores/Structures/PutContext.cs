@@ -1,5 +1,4 @@
 ﻿using System;
-using KLogger.Cores.Components;
 
 namespace KLogger.Cores.Structures
 {

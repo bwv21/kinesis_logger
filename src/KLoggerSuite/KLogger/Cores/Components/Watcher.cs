@@ -15,7 +15,7 @@ namespace KLogger.Cores.Components
     // Monitor, Counter을 피해서 사용한 이름.
     internal class Watcher
     {
-        private const Int32 QUEUE_SIZE_RECORD_INTERVAL_MS = 333;            // 큐 크기 기록 주기.
+        private const Int32 QUEUE_SIZE_RECORD_INTERVAL_MS = 333;    // 큐 크기 기록 주기.
 
         // 보고가 끝나면 초기화.
         private class TemporalCounter

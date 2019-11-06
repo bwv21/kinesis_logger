@@ -4,11 +4,11 @@ using System.Collections.Generic;
 // http: //docs.aws.amazon.com/ko_kr/kinesis/latest/APIReference/API_PutRecords.html
 namespace KLogger.Libs.AWS.Kinesis.Put
 {
-	internal class ResponsePutRecords
-	{
-		public Int32 FailedRecordCount { get; set; }
-		public List<Record> Records { get; set; }
-	}
+    internal class ResponsePutRecords
+    {
+        public Int32 FailedRecordCount { get; set; }
+        public List<Record> Records { get; set; }
+    }
 }
 
 /*

@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using KLogger.Cores.Exceptions;
 using KLogger.Libs;
 using KLogger.Types;
@@ -48,7 +46,7 @@ namespace KLogger.Configs
                 DecryptedAccessID = SimpleAES4String.Decrypt(AccessID, KEK);
                 DecryptedSecretKey = SimpleAES4String.Decrypt(SecretKey, KEK);
 
-                KEK = KEK.HideString(1, true);  // 사용이 끝나고 가린다(Config 조회 시 가리는 효과).
+                KEK = KEK.HideString(1, true);  // Config 조회 시 가리는 효과.
             }
         }
 
@@ -110,7 +108,7 @@ namespace KLogger.Configs
             /// <summary> 표기 시간(UTC)에 더할 시간(한국이면 +9). 기본값은 <see cref="Const.SLACK_UTC_ADD_HOUR"/> </summary>
             [JsonProperty] public Int32 UTCAddHour { get; internal set; }
 
-            /// <summary> 메시지 순서 보장 시도(100% 보장은 안됨). 보장(1), 미보장(0) 기본값은 <see cref="Const.SLACK_REPORTER_TRY_ORDERING_REPORT"/> </summary>
+            /// <summary> 메시지 순서 보장 시도. 보장시도(1), 미보장(0) 기본값은 <see cref="Const.SLACK_REPORTER_TRY_ORDERING_REPORT"/> </summary>
             [JsonProperty] public Int32 TryOrderingReport { get; internal set; }
 
             internal SlackConfig()

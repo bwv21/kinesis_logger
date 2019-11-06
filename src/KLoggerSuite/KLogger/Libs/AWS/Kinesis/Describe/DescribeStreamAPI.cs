@@ -19,7 +19,7 @@ namespace KLogger.Libs.AWS.Kinesis.Describe
         {
             var describeStreamSummary = new
                                         {
-                                            StreamName = _streamName
+                                            StreamName = StreamName
                                         };
 
             String postString = JsonConvert.SerializeObject(describeStreamSummary);

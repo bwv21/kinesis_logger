@@ -11,7 +11,7 @@ namespace KLogger.Configs
 
         // https://docs.aws.amazon.com/ko_kr/kinesis/latest/APIReference/API_PutRecords.html
         // https: //aws.amazon.com/ko/kinesis/data-streams/pricing
-        #region AWS 제약이므로 스펙 변경을 공식적으로 발표하면 수정한다
+        #region AWS 제약이므로 공식 스펙 변경이 일어나지 않는한 수정하지 않는다.
 
         /// <summary> Kinesis에 배치로 보낼 수 있는 최대 개수. 500(AWS 제약). </summary>
         public const Int32 MAX_KINESIS_BATCH_SIZE = 500;

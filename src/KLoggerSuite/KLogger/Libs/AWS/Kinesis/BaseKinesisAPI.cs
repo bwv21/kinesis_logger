@@ -9,23 +9,23 @@ namespace KLogger.Libs.AWS.Kinesis
     {
         public delegate void RequestCompletedDelegate(UploadDataCompletedEventArgs args, Object context);
 
-        protected readonly PostUtil _postUtil = new PostUtil();
+        protected readonly String Region;
+        protected readonly String AccessID;
+        protected readonly String SecretKey;
+        protected readonly String StreamName;
+        protected readonly Uri EndPointUri;
+        protected readonly RequestCompletedDelegate RequestCompleted;
 
-        protected readonly String _region;
-        protected readonly String _accessID;
-        protected readonly String _secretKey;
-        protected readonly String _streamName;
-        protected readonly Uri _endPointUri;
-        protected readonly RequestCompletedDelegate _requestCompleted;
+        private readonly PostUtil _postUtil = new PostUtil();
 
         protected BaseKinesisAPI(String region, String accessID, String secretKey, String streamName, RequestCompletedDelegate requestCompleted)
         {
-            _region = region;
-            _accessID = accessID;
-            _secretKey = secretKey;
-            _streamName = streamName;
-            _endPointUri = new Uri($"https://kinesis.{_region}.amazonaws.com");
-            _requestCompleted = requestCompleted;
+            Region = region;
+            AccessID = accessID;
+            SecretKey = secretKey;
+            StreamName = streamName;
+            EndPointUri = new Uri($"https://kinesis.{Region}.amazonaws.com");
+            RequestCompleted = requestCompleted;
         }
 
         protected void Request(String api, Byte[] post, Object context)
@@ -33,21 +33,21 @@ namespace KLogger.Libs.AWS.Kinesis
             using (var webClient = new WebClient { Encoding = Encoding.UTF8 })
             {
                 Dictionary<String, String> headers = _postUtil.CreateHeader(post,
-                                                                            _endPointUri,
+                                                                            EndPointUri,
                                                                             "kinesis",
                                                                             $"Kinesis_20131202.{api}",
-                                                                            _region,
-                                                                            _accessID,
-                                                                            _secretKey);
+                                                                            Region,
+                                                                            AccessID,
+                                                                            SecretKey);
 
                 foreach (var header in headers)
                 {
                     webClient.Headers.Add(header.Key, header.Value);
                 }
 
-                webClient.UploadDataCompleted += (_, args) => _requestCompleted?.Invoke(args, context);
+                webClient.UploadDataCompleted += (_, args) => RequestCompleted?.Invoke(args, context);
 
-                webClient.UploadDataAsync(_endPointUri, "POST", post);
+                webClient.UploadDataAsync(EndPointUri, "POST", post);
             }
         }
     }

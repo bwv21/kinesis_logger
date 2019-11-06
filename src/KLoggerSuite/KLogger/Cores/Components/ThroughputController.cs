@@ -15,9 +15,9 @@ using Newtonsoft.Json;
 namespace KLogger.Cores.Components
 {
     /// <summary>
-    /// <para> 1초에 샤드 하나가 받을 수 있는 바이트와 레코드의 제한을 여기서 용량(Capacity)이라 부른다. </para>
+    /// <para> 1초에 샤드 하나가 받을 수 있는 바이트와 레코드의 제한을 용량(Capacity)이라 부르자. </para>
     /// <para> 경과 시간에 비례해 용량을 획득하며, 내부 또는 외부에서 전송이 일어나면 용량을 소모하게 된다(용량을 초과하면 재시도하기 때문에 정확히 맞출 필요는 없다). </para>
-    /// <para> 최대한 많이 보내서 스루풋 초과에 의해 여러 번 재시도가 일어나는 것보다 제어를 사용하는 것이 같은 시간에 더 많은 양을 보낼 수 있었다. </para>
+    /// <para> 조절없이 보내서 스루풋 초과에 의해 재시도가 일어나는 것보다 조절해서 보냈을 때 성능이 좋았다. </para>
     /// </summary>
     internal class ThroughputController
     {

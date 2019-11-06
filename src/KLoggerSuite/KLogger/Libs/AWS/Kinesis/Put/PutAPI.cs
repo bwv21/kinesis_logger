@@ -27,7 +27,7 @@ namespace KLogger.Libs.AWS.Kinesis.Put
             var putRecords = new PutRecords
                              {
                                  Records = new PutRecord[recordCount],
-                                 StreamName = _streamName
+                                 StreamName = StreamName
                              };
 
             using (SHA1 sha = SHA1.Create())
