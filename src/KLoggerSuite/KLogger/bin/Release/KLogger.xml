@@ -1,0 +1,771 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>KLogger</name>
+    </assembly>
+    <members>
+        <member name="T:KLogger.Configs.Const">
+            <summary> 로거의 상수를 정의. </summary>
+        </member>
+        <member name="F:KLogger.Configs.Const.LOG_DELIMITER">
+            <summary> 레코드(행) 즉, 하나의 로그를 구별하는 식별자. </summary>
+        </member>
+        <member name="F:KLogger.Configs.Const.MAX_KINESIS_BATCH_SIZE">
+            <summary> Kinesis에 배치로 보낼 수 있는 최대 개수. 500(AWS 제약). </summary>
+        </member>
+        <member name="F:KLogger.Configs.Const.MAX_KINESIS_RECORD_BYTE">
+            <summary> Kinesis 단일 레코드 최대 크기. 1MB(AWS 제약). </summary>
+        </member>
+        <member name="F:KLogger.Configs.Const.BYTE_FOR_SECOND_PER_SHARD_BYTE">
+            <summary> 1초 동안 샤드당 받을 수 있는 바이트. 1MB(AWS 제약). </summary>
+        </member>
+        <member name="F:KLogger.Configs.Const.RECORD_FOR_SECOND_PER_SHARD_COUNT">
+            <summary> 1초 동안 샤드당 받을 수 있는 레코드. 1000(AWS 제약). </summary>
+        </member>
+        <member name="F:KLogger.Configs.Const.WORK_THREAD_COUNT">
+            <summary> <see cref="P:KLogger.Configs.Config.WorkThreadCount"/> 의 기본값. </summary>
+        </member>
+        <member name="F:KLogger.Configs.Const.WORK_THREAD_INTERVAL_MS">
+            <summary> <see cref="P:KLogger.Configs.Config.WorkThreadIntervalMS"/> 의 기본값. </summary>
+        </member>
+        <member name="F:KLogger.Configs.Const.COMPLETE_LOG_INTERVAL_MS">
+            <summary> <see cref="P:KLogger.Configs.Config.CompletePutIntervalMS"/> 의 기본값. </summary>
+        </member>
+        <member name="F:KLogger.Configs.Const.MAX_SERIAL_ERROR_COUNT">
+            <summary> <see cref="P:KLogger.Configs.Config.MaxSerialErrorCount"/> 의 기본값. </summary>
+        </member>
+        <member name="F:KLogger.Configs.Const.MAX_LOG_QUEUE_SIZE">
+            <summary> <see cref="P:KLogger.Configs.Config.MaxLogQueueSize"/> 의 기본값. </summary>
+        </member>
+        <member name="F:KLogger.Configs.Const.MAX_RECORD_BYTE">
+            <summary> <see cref="P:KLogger.Configs.Config.MaxRecordByte"/> 의 기본값. </summary>
+        </member>
+        <member name="F:KLogger.Configs.Const.MAX_BATCH_SIZE">
+            <summary> <see cref="P:KLogger.Configs.Config.MaxBatchSize"/> 의 기본값. </summary>
+        </member>
+        <member name="F:KLogger.Configs.Const.MAX_BATCH_WAIT_TIME_MS">
+            <summary> <see cref="P:KLogger.Configs.Config.MaxBatchWaitTimeMS"/> 의 기본값. </summary>
+        </member>
+        <member name="F:KLogger.Configs.Const.MAX_RETRY_SEND_COUNT">
+            <summary> <see cref="P:KLogger.Configs.Config.MaxRetrySendCount"/> 의 기본값. </summary>
+        </member>
+        <member name="F:KLogger.Configs.Const.COMPRESS_LOG_THRESHOLD_BYTE">
+            <summary> <see cref="P:KLogger.Configs.Config.CompressLogThresholdByte"/> 의 기본값. </summary>
+        </member>
+        <member name="F:KLogger.Configs.Const.USE_IGNORE_LOG_TYPES">
+            <summary> <see cref="P:KLogger.Configs.Config.CompressLogThresholdByte"/> 의 기본값. </summary>
+        </member>
+        <member name="F:KLogger.Configs.Const.USE_THROUGHPUT_CONTROL">
+            <summary> <see cref="P:KLogger.Configs.Config.UseThroughputControl"/> 의 기본값. </summary>
+        </member>
+        <member name="F:KLogger.Configs.Const.WATCHER_INTERVAL_MS">
+            <summary> <see cref="P:KLogger.Configs.Config.Watcher.IntervalMS"/> 의 기본값. </summary>
+        </member>
+        <member name="F:KLogger.Configs.Const.REPORT_ELAPSED_MEAN_MS">
+            <summary> <see cref="P:KLogger.Configs.Config.Watcher.ReportElapsedMeanMS"/> 의 기본값. </summary>
+        </member>
+        <member name="F:KLogger.Configs.Const.REPORT_LOG_COUNT">
+            <summary> <see cref="P:KLogger.Configs.Config.Watcher.ReportLogCount"/> 의 기본값. </summary>
+        </member>
+        <member name="F:KLogger.Configs.Const.REPORT_QUEUE_MEAN_SIZE">
+            <summary> <see cref="P:KLogger.Configs.Config.Watcher.ReportQueueMeanSize"/> 의 기본값. </summary>
+        </member>
+        <member name="F:KLogger.Configs.Const.REPORT_QUEUE_STD_DEV">
+            <summary> <see cref="P:KLogger.Configs.Config.Watcher.ReportQueueStdDev"/> 의 기본값. </summary>
+        </member>
+        <member name="F:KLogger.Configs.Const.REPORT_LEVEL">
+            <summary> <see cref="P:KLogger.Configs.Config.ReportLevel"/> 의 기본값. </summary>
+        </member>
+        <member name="F:KLogger.Configs.Const.REPORTER_TYPE">
+            <summary> <see cref="P:KLogger.Configs.Config.ReporterType"/> 의 기본값. </summary>
+        </member>
+        <member name="F:KLogger.Configs.Const.SLACK_REPORTER_TRY_ORDERING_REPORT">
+            <summary> <see cref="P:KLogger.Configs.Config.SlackConfig.TryOrderingReport"/> 의 기본값. </summary>
+        </member>
+        <member name="F:KLogger.Configs.Const.SLACK_UTC_ADD_HOUR">
+            <summary> <see cref="P:KLogger.Configs.Config.SlackConfig.UTCAddHour"/> 의 기본값. </summary>
+        </member>
+        <member name="T:KLogger.Configs.Config">
+            <summary>
+            <para> 로거의 설정. <see cref="M:KLogger.Configs.Config.Create(System.String)"/> 로 생성한다. </para>
+            파일에 없는 항목은 기본값이 사용된다.
+            </summary>
+        </member>
+        <member name="T:KLogger.Configs.Config.AWS">
+            <summary> AWS 설정. </summary>
+        </member>
+        <member name="P:KLogger.Configs.Config.AWS.Region">
+            <summary> Kinesis 의 Region. </summary>
+        </member>
+        <member name="P:KLogger.Configs.Config.AWS.KEK">
+            <summary> <see cref="P:KLogger.Configs.Config.AWS.AccessID"/>, <see cref="P:KLogger.Configs.Config.AWS.SecretKey"/> 를 암호화 할 때 사용한 키. </summary>
+        </member>
+        <member name="P:KLogger.Configs.Config.AWS.AccessID">
+            <summary> <see cref="P:KLogger.Configs.Config.AWS.KEK"/> 로 암호화한 AWS AccessID. </summary>
+        </member>
+        <member name="P:KLogger.Configs.Config.AWS.DecryptedAccessID">
+            <summary> <see cref="P:KLogger.Configs.Config.AWS.KEK"/> 로 복호화한 AccessID. </summary>
+        </member>
+        <member name="P:KLogger.Configs.Config.AWS.SecretKey">
+            <summary> <see cref="P:KLogger.Configs.Config.AWS.KEK"/> 로 암호화한 AWS SecretKey. </summary>
+        </member>
+        <member name="P:KLogger.Configs.Config.AWS.DecryptedSecretKey">
+            <summary> <see cref="P:KLogger.Configs.Config.AWS.KEK"/> 로 복호화한 SecretKey. </summary>
+        </member>
+        <member name="P:KLogger.Configs.Config.AWS.KinesisStreamName">
+            <summary> Kinesis Stream 의 이름. </summary>
+        </member>
+        <member name="T:KLogger.Configs.Config.Watcher">
+            <summary> 로거의 모니터링. </summary>
+        </member>
+        <member name="P:KLogger.Configs.Config.Watcher.IntervalMS">
+            <summary> 모니터링 동작 주기. 기본값은 <see cref="F:KLogger.Configs.Const.WATCHER_INTERVAL_MS"/> </summary>
+        </member>
+        <member name="P:KLogger.Configs.Config.Watcher.ReportElapsedMeanMS">
+            <summary> <see cref="P:KLogger.Configs.Config.Watcher.IntervalMS"/> 동안 평균 로그 처리시간이 이 값보다 큰 경우 보고한다. 기본값은 <see cref="F:KLogger.Configs.Const.REPORT_ELAPSED_MEAN_MS"/> </summary>
+        </member>
+        <member name="P:KLogger.Configs.Config.Watcher.ReportLogCount">
+            <summary> <see cref="P:KLogger.Configs.Config.Watcher.IntervalMS"/> 동안 처리한 로그가 이 값보다 큰 경우 보고한다. 기본값은 <see cref="F:KLogger.Configs.Const.REPORT_LOG_COUNT"/> </summary>
+        </member>
+        <member name="P:KLogger.Configs.Config.Watcher.ReportQueueMeanSize">
+            <summary> <see cref="P:KLogger.Configs.Config.Watcher.IntervalMS"/> 동안 로그 큐의 크기 평균이 이 값보다 큰 경우 보고한다. 기본값은 <see cref="F:KLogger.Configs.Const.REPORT_QUEUE_MEAN_SIZE"/> </summary>
+        </member>
+        <member name="P:KLogger.Configs.Config.Watcher.ReportQueueStdDev">
+            <summary> <see cref="P:KLogger.Configs.Config.Watcher.IntervalMS"/> 동안 로그 큐의 크기 표준편차가 이 값보다 큰 경우 보고한다. 기본값은 <see cref="F:KLogger.Configs.Const.REPORT_QUEUE_STD_DEV"/> </summary>
+        </member>
+        <member name="T:KLogger.Configs.Config.SlackConfig">
+            <summary> 슬랙 리포터를 위한 설정. </summary>
+        </member>
+        <member name="P:KLogger.Configs.Config.SlackConfig.NamePrefix">
+            <summary> 보내는 사람(username) 앞에 붙을 접두사. </summary>
+        </member>
+        <member name="P:KLogger.Configs.Config.SlackConfig.WebhookUrl">
+            <summary> 슬랙 WebhookUrl. </summary>
+        </member>
+        <member name="P:KLogger.Configs.Config.SlackConfig.DebugChannel">
+            <summary> Debug 수신 채널. </summary>
+        </member>
+        <member name="P:KLogger.Configs.Config.SlackConfig.InfoChannel">
+            <summary> Info 수신 채널. </summary>
+        </member>
+        <member name="P:KLogger.Configs.Config.SlackConfig.WarnChannel">
+            <summary> Warn 수신 채널. </summary>
+        </member>
+        <member name="P:KLogger.Configs.Config.SlackConfig.ErrorChannel">
+            <summary> Error 수신 채널 </summary>
+        </member>
+        <member name="P:KLogger.Configs.Config.SlackConfig.FatalChannel">
+            <summary> Fatal 수신 채널. </summary>
+        </member>
+        <member name="P:KLogger.Configs.Config.SlackConfig.IconEmoji">
+            <summary> :이름: 과 같은 IconEmoji. </summary>
+        </member>
+        <member name="P:KLogger.Configs.Config.SlackConfig.UTCAddHour">
+            <summary> 표기 시간(UTC)에 더할 시간(한국이면 +9). 기본값은 <see cref="F:KLogger.Configs.Const.SLACK_UTC_ADD_HOUR"/> </summary>
+        </member>
+        <member name="P:KLogger.Configs.Config.SlackConfig.TryOrderingReport">
+            <summary> 메시지 순서 보장 시도(100% 보장은 안됨). 보장(1), 미보장(0) 기본값은 <see cref="F:KLogger.Configs.Const.SLACK_REPORTER_TRY_ORDERING_REPORT"/> </summary>
+        </member>
+        <member name="P:KLogger.Configs.Config.AssemblyVersion">
+            <summary> 빌드 버전 정보. </summary>
+        </member>
+        <member name="P:KLogger.Configs.Config.ID">
+            <summary> 식별자. 소문자로 변환된다. </summary>
+        </member>
+        <member name="P:KLogger.Configs.Config.WorkThreadCount">
+            <summary> 로그 처리 스레드 수. 기본값은 <see cref="F:KLogger.Configs.Const.WORK_THREAD_COUNT"/> </summary>
+        </member>
+        <member name="P:KLogger.Configs.Config.WorkThreadIntervalMS">
+            <summary> 로그 처리 스레드의 루프 주기(ms). 기본값은 <see cref="F:KLogger.Configs.Const.WORK_THREAD_INTERVAL_MS"/> </summary>
+        </member>
+        <member name="P:KLogger.Configs.Config.CompletePutIntervalMS">
+            <summary> 처리 완료 로그의 통지 스레드 루프 주기(ms). 기본값은 <see cref="F:KLogger.Configs.Const.COMPLETE_LOG_INTERVAL_MS"/> </summary>
+        </member>
+        <member name="P:KLogger.Configs.Config.MaxSerialErrorCount">
+            <summary> 최대 연속 오류 횟수. 도달 시 로거를 일시정지한다. 기본값은 <see cref="F:KLogger.Configs.Const.MAX_SERIAL_ERROR_COUNT"/> </summary>
+        </member>
+        <member name="P:KLogger.Configs.Config.MaxLogQueueSize">
+            <summary> 최대 로그 큐(Queue) 크기. 도달 시 로그를 추가(Push)할 수 없다. <see cref="P:KLogger.Configs.Config.UseThroughputControl"/> 이 켜져있다면 해당 큐의 크기도 포함한다. 기본값은 <see cref="F:KLogger.Configs.Const.MAX_LOG_QUEUE_SIZE"/> </summary>
+        </member>
+        <member name="P:KLogger.Configs.Config.MaxRecordByte">
+            <summary> 단일 로그의 최대 크기. <see cref="F:KLogger.Configs.Const.MAX_KINESIS_RECORD_BYTE"/> 보다 클 수 없다. 압축(<see cref="P:KLogger.Configs.Config.CompressLogThresholdByte"/>)을 사용하는 경우, 압축 이후의 크기와 비교한다. 기본값은 <see cref="F:KLogger.Configs.Const.MAX_RECORD_BYTE"/> </summary>
+        </member>
+        <member name="P:KLogger.Configs.Config.MaxBatchSize">
+            <summary> 배치로 보낼 최대 로그 개수. <see cref="F:KLogger.Configs.Const.MAX_KINESIS_BATCH_SIZE"/> 보다 클 수 없다. 기본값은 <see cref="F:KLogger.Configs.Const.MAX_BATCH_SIZE"/> </summary>
+        </member>
+        <member name="P:KLogger.Configs.Config.MaxBatchWaitTimeMS">
+            <summary> 배치로 보내기 위해 로그가 모이기를 기다리는 최대 시간(ms). 너무 작으면 배치 안의 로그 개수가 적어져 성능이 떨어진다. 기본값은 <see cref="F:KLogger.Configs.Const.MAX_BATCH_WAIT_TIME_MS"/> </summary>
+        </member>
+        <member name="P:KLogger.Configs.Config.MaxRetrySendCount">
+            <summary> 최대 로그 재전송 횟수. 도달하면 로그를 버리고 통지. 기본값은 <see cref="F:KLogger.Configs.Const.MAX_RETRY_SEND_COUNT"/> </summary>
+        </member>
+        <member name="P:KLogger.Configs.Config.CompressLogThresholdByte">
+            <summary> 로그가 이 값보다 크면 압축. 기본값은 <see cref="F:KLogger.Configs.Const.COMPRESS_LOG_THRESHOLD_BYTE"/> </summary>
+        </member>
+        <member name="P:KLogger.Configs.Config.UseThroughputControl">
+            <summary> 샤드 개수에 따른 전송량 제어 기능 on(1), off(0). 꺼져 있으면 최대한 많이 보내려고 노력한다. 기본값은 <see cref="F:KLogger.Configs.Const.USE_THROUGHPUT_CONTROL"/> </summary>
+        </member>
+        <member name="P:KLogger.Configs.Config.UseIgnoreLogType">
+            <summary> 로그 타입 별 푸시 무시 기능 on(1), off(0). 기본값은 <see cref="F:KLogger.Configs.Const.USE_IGNORE_LOG_TYPES"/> </summary>
+        </member>
+        <member name="P:KLogger.Configs.Config.AWSs">
+            <summary> AWS 설정. </summary>
+        </member>
+        <member name="P:KLogger.Configs.Config.SlackConfigs">
+            <summary> <see cref="T:KLogger.Libs.SlackWebhook"/> 설정. </summary>
+        </member>
+        <member name="P:KLogger.Configs.Config.Watchers">
+            <summary> <see cref="T:KLogger.Configs.Config.Watcher"/> 설정. </summary>
+        </member>
+        <member name="P:KLogger.Configs.Config.IgnoreLogTypes">
+            <summary> 푸시를 무시할 로그 타입의 초깃값. </summary>
+        </member>
+        <member name="P:KLogger.Configs.Config.ReporterType">
+            <summary> 리포터 타입. 기본값은 <see cref="F:KLogger.Configs.Const.REPORTER_TYPE"/> </summary>
+        </member>
+        <member name="P:KLogger.Configs.Config.ReportLevel">
+            <summary> 리포트 레벨. 레벨 이상의 리포트만 전송한다. 기본값은 <see cref="F:KLogger.Configs.Const.REPORT_LEVEL"/> </summary>
+        </member>
+        <member name="P:KLogger.Configs.Config.ConfigString">
+            <summary> <see cref="T:KLogger.Configs.Config"/> 자신을 문자열로 한 줄로 변환한 결과. </summary>
+        </member>
+        <member name="P:KLogger.Configs.Config.ConfigStringPretty">
+            <summary> <see cref="T:KLogger.Configs.Config"/> 자신을 문자열로 보기좋게 변환한 결과. </summary>
+        </member>
+        <member name="M:KLogger.Configs.Config.Create(System.String)">
+            <summary>
+            <see cref="T:KLogger.Configs.Config"/> 인스턴스를 파일로부터 생성한다.
+            </summary>
+            <param name="configPath"> 설정 파일 경로. </param>
+            <returns> 생성한 Config. </returns>
+        </member>
+        <member name="T:KLogger.Libs.AWS.Auth.AWS4SignerBase">
+            <summary>
+            Common methods and properties for all AWS4 signer variants
+            </summary>
+        </member>
+        <member name="P:KLogger.Libs.AWS.Auth.AWS4SignerBase.EndpointUri">
+            <summary>
+            The service endpoint, including the path to any resource.
+            </summary>
+        </member>
+        <member name="P:KLogger.Libs.AWS.Auth.AWS4SignerBase.HttpMethod">
+            <summary>
+            The HTTP verb for the request, e.g. GET.
+            </summary>
+        </member>
+        <member name="P:KLogger.Libs.AWS.Auth.AWS4SignerBase.Service">
+            <summary>
+            The signing name of the service, e.g. 's3'.
+            </summary>
+        </member>
+        <member name="P:KLogger.Libs.AWS.Auth.AWS4SignerBase.Region">
+            <summary>
+            The system name of the AWS region associated with the endpoint, e.g. us-east-1.
+            </summary>
+        </member>
+        <member name="M:KLogger.Libs.AWS.Auth.AWS4SignerBase.CanonicalizeHeaderNames(System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            Returns the canonical collection of header names that will be included in
+            the signature. For AWS4, all header names must be included in the process 
+            in sorted canonicalized order.
+            </summary>
+            <param name="headers">
+            The set of header names and values that will be sent with the request
+            </param>
+            <returns>
+            The set of header names canonicalized to a flattened, ;-delimited string
+            </returns>
+        </member>
+        <member name="M:KLogger.Libs.AWS.Auth.AWS4SignerBase.CanonicalizeHeaders(System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            Computes the canonical headers with values for the request. 
+            For AWS4, all headers must be included in the signing process.
+            </summary>
+            <param name="headers">The set of headers to be encoded</param>
+            <returns>Canonicalized string of headers with values</returns>
+        </member>
+        <member name="M:KLogger.Libs.AWS.Auth.AWS4SignerBase.CanonicalizeRequest(System.Uri,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Returns the canonical request string to go into the signer process; this 
+            consists of several canonical sub-parts.
+            </summary>
+            <param name="endpointUri"></param>
+            <param name="httpMethod"></param>
+            <param name="queryParameters"></param>
+            <param name="canonicalizedHeaderNames">
+            The set of header names to be included in the signature, formatted as a flattened, ;-delimited string
+            </param>
+            <param name="canonicalizedHeaders">
+            </param>
+            <param name="bodyHash">
+            Precomputed SHA256 hash of the request body content. For chunked encoding this
+            should be the fixed string ''.
+            </param>
+            <returns>String representing the canonicalized request for signing</returns>
+        </member>
+        <member name="M:KLogger.Libs.AWS.Auth.AWS4SignerBase.CanonicalResourcePath(System.Uri)">
+            <summary>
+            Returns the canonicalized resource path for the service endpoint
+            </summary>
+            <param name="endpointUri">Endpoint to the service/resource</param>
+            <returns>Canonicalized resource path for the endpoint</returns>
+        </member>
+        <member name="M:KLogger.Libs.AWS.Auth.AWS4SignerBase.DeriveSigningKey(System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Compute and return the multi-stage signing key for the request.
+            </summary>
+            <param name="algorithm">Hashing algorithm to use</param>
+            <param name="awsSecretAccessKey">The clear-text AWS secret key</param>
+            <param name="region">The region in which the service request will be processed</param>
+            <param name="date">Date of the request, in yyyyMMdd format</param>
+            <param name="service">The name of the service being called by the request</param>
+            <returns>Computed signing key</returns>
+        </member>
+        <member name="M:KLogger.Libs.AWS.Auth.AWS4SignerBase.ComputeKeyedHash(System.String,System.Byte[],System.Byte[])">
+            <summary>
+            Compute and return the hash of a data blob using the specified algorithm
+            and key
+            </summary>
+            <param name="algorithm">Algorithm to use for hashing</param>
+            <param name="key">Hash key</param>
+            <param name="data">Data blob</param>
+            <returns>Hash of the data</returns>
+        </member>
+        <member name="M:KLogger.Libs.AWS.Auth.AWS4SignerBase.ToHexString(System.Byte[],System.Boolean)">
+            <summary>
+            Helper to format a byte array into string
+            </summary>
+            <param name="data">The data blob to process</param>
+            <param name="lowercase">If true, returns hex digits in lower case form</param>
+            <returns>String version of the data</returns>
+        </member>
+        <member name="T:KLogger.Libs.AWS.Auth.AWS4SignerForPOST">
+            <summary>
+            Sample AWS4 signer demonstrating how to sign POST requests to Amazon S3
+            using a policy.
+            </summary>
+        </member>
+        <member name="M:KLogger.Libs.AWS.Auth.AWS4SignerForPOST.ComputeSignature(System.Collections.Generic.IDictionary{System.String,System.String},System.String,System.String,System.String,System.String)">
+            <summary>
+            Computes an AWS4 signature for a request, ready for inclusion as an 
+            'Authorization' header.
+            </summary>
+            <param name="headers">
+            The request headers; 'Host' and 'X-Amz-Date' will be added to this set.
+            </param>
+            <param name="queryParameters">
+            Any query parameters that will be added to the endpoint. The parameters 
+            should be specified in canonical format.
+            </param>
+            <param name="bodyHash">
+            Precomputed SHA256 hash of the request body content; this value should also
+            be set as the header 'X-Amz-Content-SHA256' for non-streaming uploads.
+            </param>
+            <param name="awsAccessKey">
+            The user's AWS Access Key.
+            </param>
+            <param name="awsSecretKey">
+            The user's AWS Secret Key.
+            </param>
+            <returns>
+            The computed authorization string for the request. This value needs to be set as the 
+            header 'Authorization' on the subsequent HTTP request.
+            </returns>
+        </member>
+        <member name="T:KLogger.Cores.Components.ThroughputController">
+            <summary>
+            <para> 1초에 샤드 하나가 받을 수 있는 바이트와 레코드의 제한을 여기서 용량(Capacity)이라 부른다. </para>
+            <para> 경과 시간에 비례해 용량을 획득하며, 내부 또는 외부에서 전송이 일어나면 용량을 소모하게 된다(용량을 초과하면 재시도하기 때문에 정확히 맞출 필요는 없다). </para>
+            <para> 최대한 많이 보내서 스루풋 초과에 의해 여러 번 재시도가 일어나는 것보다 제어를 사용하는 것이 같은 시간에 더 많은 양을 보낼 수 있었다. </para>
+            </summary>
+        </member>
+        <member name="T:KLogger.Cores.Loggers.Logger">
+            <summary>
+                Logger의 Push.
+            </summary>
+            <summary>
+                Logger의 설정 변경.
+                상대적으로 덜 중요한 동작이라고 판단하여 락을 사용하지 않고 처리한다.
+            </summary>
+            <summary>
+                Logger의 상태 변경.
+            </summary>
+            <summary>
+                Logger의 멤버.
+            </summary>
+            <summary>
+                Logger의 정지.
+            </summary>
+            <summary>
+                Logger의 Tick(루프 한 번의 동작).
+                로그를 모으고 가공한다.
+            </summary>
+            <summary>
+                the logger.
+            </summary>
+            <summary>
+                Logger의 시작.
+            </summary>
+        </member>
+        <member name="T:KLogger.Cores.Exceptions.LoggerException">
+            <summary> 로거의 예외. </summary>
+        </member>
+        <member name="M:KLogger.Cores.Exceptions.LoggerException.#ctor(System.String)">
+            <summary>
+            문자열을 받는 생성자. 
+            </summary>
+            <param name="message">
+            예외 메시지.
+            </param>
+        </member>
+        <member name="T:KLogger.Cores.Exceptions.LoggerStartException">
+            <summary> 로거 시작(<see cref="M:KLogger.Cores.Loggers.Logger.Start"/>)의 예외. </summary>
+        </member>
+        <member name="F:KLogger.Cores.Exceptions.LoggerStartException.StartResult">
+            <summary> 로거 시작(<see cref="M:KLogger.Cores.Loggers.Logger.Start"/>)의 실패 결과. </summary>
+        </member>
+        <member name="T:KLogger.Types.CompletePutNotice">
+            <summary>
+            로그 전송의 완료알림(<see cref="T:KLogger.Types.NoticeCompletePutDelegate"/>)의 인자로 하나의 결과에 대해 여러 로그가 있을 수 있다.
+            </summary>
+        </member>
+        <member name="P:KLogger.Types.CompletePutNotice.Logs">
+            <summary> 같은 결과로 완료된 로그들. </summary>
+        </member>
+        <member name="P:KLogger.Types.CompletePutNotice.CompletePutNoticeResultType">
+            <summary> 로그들의 처리 결과. </summary>
+        </member>
+        <member name="T:KLogger.Types.ILog">
+            <summary>
+            로거가 다루는 로그 인터페이스.
+            </summary>
+        </member>
+        <member name="P:KLogger.Types.ILog.Sequence">
+            <summary> Push할 때 리턴한 값. 하나의 로거 인스턴스 안에서만 유일함을 보장한다. </summary>
+        </member>
+        <member name="P:KLogger.Types.ILog.TimeStamp">
+            <summary> Push할 때의 Timestamp(UTC). </summary>
+        </member>
+        <member name="P:KLogger.Types.ILog.LogType">
+            <summary> Push할 때 넘긴 타입 문자열. </summary>
+        </member>
+        <member name="P:KLogger.Types.ILog.LogObject">
+            <summary> Push한 로그 인스턴스. </summary>
+        </member>
+        <member name="T:KLogger.Types.StringLogObject">
+            <summary>
+            <para> Athena에 JSON이 아닌, String을 바로 넣으면 조회시 오류가 생길 수 있기 때문에 만든 래핑 클래스. </para>
+            String을 바로 로그로 남기는 경우, 로거가 해당 클래스로 변환한다.
+            </summary>
+        </member>
+        <member name="P:KLogger.Types.StringLogObject.raw">
+            <summary> 원본 문자열 </summary>
+        </member>
+        <member name="T:KLogger.Types.NoticeCompletePutDelegate">
+            <summary>
+            <para> 로그 전송의 최종 완료 콜백으로 여러 스레드에서 불릴 수 있으며 순서를 보장하지 않는다. </para>
+            설정(<see cref="T:KLogger.Types.CompletePutNoticeType"/>) 값에 따라 통지가 오지 않거나 특정 처리 결과의 통지만 온다.
+            </summary>
+            <param name="completePutNotices">
+            한 개 이상의 처리를 완료한 로그.
+            </param>
+        </member>
+        <member name="T:KLogger.Types.CompletePutNoticeType">
+            <summary> <see cref="T:KLogger.Types.NoticeCompletePutDelegate"/> 에서 통지받을 결과의 종류. </summary>
+        </member>
+        <member name="F:KLogger.Types.CompletePutNoticeType.None">
+            <summary> 통지를 받지 않는다. </summary>
+        </member>
+        <member name="F:KLogger.Types.CompletePutNoticeType.FailOnly">
+            <summary> 실패(<see cref="F:KLogger.Types.CompletePutNoticeResultType.Success"/> 외 나머지) 통지만 받는다(권장). </summary>
+        </member>
+        <member name="F:KLogger.Types.CompletePutNoticeType.SuccessOnly">
+            <summary> 성공(<see cref="F:KLogger.Types.CompletePutNoticeResultType.Success"/>) 통지만 받는다. </summary>
+        </member>
+        <member name="F:KLogger.Types.CompletePutNoticeType.Both">
+            <summary> 모든(성공, 실패) 통지를 받는다. </summary>
+        </member>
+        <member name="T:KLogger.Types.BuildType">
+            <summary> 로거 바이너리 빌드 타입. </summary>
+        </member>
+        <member name="F:KLogger.Types.BuildType.Debug">
+            <summary> Debug 빌드. </summary>
+        </member>
+        <member name="F:KLogger.Types.BuildType.Release">
+            <summary> Release 빌드. </summary>
+        </member>
+        <member name="T:KLogger.Types.ReporterType">
+            <summary> 로거의 리포터 타입. </summary>
+        </member>
+        <member name="F:KLogger.Types.ReporterType.InvalidMin">
+            <summary> 사용하지 않는다. </summary>
+        </member>
+        <member name="F:KLogger.Types.ReporterType.None">
+            <summary> 리포터 없음. 어디에도 출력하지 않는다. </summary>
+        </member>
+        <member name="F:KLogger.Types.ReporterType.Debug">
+            <summary> <see cref="T:System.Diagnostics.Debug"/> 를 사용하여 출력한다. </summary>
+        </member>
+        <member name="F:KLogger.Types.ReporterType.Console">
+            <summary> <see cref="T:System.Console"/> 을 사용하여 출력한다 </summary>
+        </member>
+        <member name="F:KLogger.Types.ReporterType.Slack">
+            <summary> 슬랙의 웹훅을 사용하여 출력한다. <see cref="T:KLogger.Configs.Config.SlackConfig"/> 설정이 필요하다. </summary>
+        </member>
+        <member name="F:KLogger.Types.ReporterType.InvalidMax">
+            <summary> 사용하지 않는다. </summary>
+        </member>
+        <member name="T:KLogger.Types.ReportLevelType">
+            <summary> 로거의 리포터 레벨. 레벨 이상의 로그만 출력한다. </summary>
+        </member>
+        <member name="F:KLogger.Types.ReportLevelType.Debug">
+            <summary> Debug 레벨. </summary>
+        </member>
+        <member name="F:KLogger.Types.ReportLevelType.Info">
+            <summary> Info 레벨. </summary>
+        </member>
+        <member name="F:KLogger.Types.ReportLevelType.Warn">
+            <summary> Warn 레벨. </summary>
+        </member>
+        <member name="F:KLogger.Types.ReportLevelType.Error">
+            <summary> Error 레벨. </summary>
+        </member>
+        <member name="F:KLogger.Types.ReportLevelType.Fatal">
+            <summary> Fatal 레벨. </summary>
+        </member>
+        <member name="T:KLogger.Types.StateType">
+            <summary> 로거의 상태. </summary>
+        </member>
+        <member name="F:KLogger.Types.StateType.Stop">
+            <summary> 정지 및 초기 상태. </summary>
+        </member>
+        <member name="F:KLogger.Types.StateType.Stopping">
+            <summary> 정지 프로세스를 진행 중인 상태. </summary>
+        </member>
+        <member name="F:KLogger.Types.StateType.Start">
+            <summary> 동작하고 있는 상태. </summary>
+        </member>
+        <member name="F:KLogger.Types.StateType.Starting">
+            <summary> 시작 프로세스를 진행 중인 상태. </summary>
+        </member>
+        <member name="F:KLogger.Types.StateType.Pause">
+            <summary> 일시정지 상태. </summary>
+        </member>
+        <member name="T:KLogger.Types.StartResultType">
+            <summary> 로거의 시작(<see cref="M:KLogger.KLoggerAPI.Start"/>) 호출 리턴 타입. </summary>
+        </member>
+        <member name="F:KLogger.Types.StartResultType.Undefined">
+            <summary> 정의되지 않음. </summary>
+        </member>
+        <member name="F:KLogger.Types.StartResultType.Success">
+            <summary> 시작 성공. </summary>
+        </member>
+        <member name="F:KLogger.Types.StartResultType.NotStopped">
+            <summary> 시작 실패. 정지해 있지 않은 로거를 시작. </summary>
+        </member>
+        <member name="F:KLogger.Types.StartResultType.InvalidConfig">
+            <summary> 시작 실패. <see cref="T:KLogger.Configs.Config"/> 에 오류가 있음. </summary>
+        </member>
+        <member name="F:KLogger.Types.StartResultType.InvalidSlackWebhookUrl">
+            <summary> 시작 실패. <see cref="T:KLogger.Configs.Config.SlackConfig"/> 에 오류가 있음. </summary>
+        </member>
+        <member name="F:KLogger.Types.StartResultType.InvalidReporterType">
+            <summary> 시작 실패. <see cref="P:KLogger.Configs.Config.ReporterType"/> 이 올바르지 않음. </summary>
+        </member>
+        <member name="T:KLogger.Types.CompletePutNoticeResultType">
+            <summary> 로그의 최종 처리 결과 타입. </summary>
+        </member>
+        <member name="F:KLogger.Types.CompletePutNoticeResultType.Success">
+            <summary> 전송 성공. </summary>
+        </member>
+        <member name="F:KLogger.Types.CompletePutNoticeResultType.FailEncode">
+            <summary> 전송 실패. 로그 인코딩 실패. </summary>
+        </member>
+        <member name="F:KLogger.Types.CompletePutNoticeResultType.TooLargeLogSize">
+            <summary> 전송 실패. 로그를 압축해도 <see cref="P:KLogger.Configs.Config.MaxRecordByte"/> 보다 큼. </summary>
+        </member>
+        <member name="F:KLogger.Types.CompletePutNoticeResultType.FailRetry">
+            <summary> 전송 실패. 재전송 횟수가 <see cref="P:KLogger.Configs.Config.MaxRetrySendCount"/> 에 도달. </summary>
+        </member>
+        <member name="T:KLogger.KLoggerAPI">
+            <summary>
+            로거를 생성하고 제어한다.
+            </summary>
+        </member>
+        <member name="P:KLogger.KLoggerAPI.BuildType">
+            <summary> 로거의 빌드 타입. </summary>
+        </member>
+        <member name="P:KLogger.KLoggerAPI.State">
+            <summary> 로거의 현재 상태. </summary>
+        </member>
+        <member name="P:KLogger.KLoggerAPI.IgnoreLogTypes">
+            <summary> 무시할 로그 타입 목록(set)으로 소문자로 변환된다. </summary>
+        </member>
+        <member name="P:KLogger.KLoggerAPI.SerialErrorCount">
+            <summary> 연속해서 발생한 에러 개수. </summary>
+        </member>
+        <member name="P:KLogger.KLoggerAPI.TotalErrorCount">
+            <summary> 로거에서 발생한 모든 에러 개수. </summary>
+        </member>
+        <member name="P:KLogger.KLoggerAPI.LogCountInQueue">
+            <summary> 로거 내부의 대기 큐 안에 있는 로그 수. </summary>
+        </member>
+        <member name="P:KLogger.KLoggerAPI.SuccessLogCount">
+            <summary> 전송에 성공한 로그 수. </summary>
+        </member>
+        <member name="P:KLogger.KLoggerAPI.PendingLogCount">
+            <summary> 전송 진행 중(재시도 포함)인 로그 수. </summary>
+        </member>
+        <member name="P:KLogger.KLoggerAPI.FailLogCount">
+            <summary> 전송에 실패하여 버린 로그 수(푸시 실패는 세지 않는다). </summary>
+        </member>
+        <member name="P:KLogger.KLoggerAPI.LogTypeToCount">
+            <summary> 요청한 타입별 로그 수(완료와 무관). </summary>
+        </member>
+        <member name="M:KLogger.KLoggerAPI.#ctor(System.String,KLogger.Types.NoticeCompletePutDelegate,KLogger.Types.CompletePutNoticeType)">
+            <summary>
+            설정 파일로부터 로거를 생성한다.
+            </summary>
+            <param name="configPath">
+            설정 파일의 경로.
+            </param>
+            <param name="noticeCompletePut">
+            처리 완료한 로그에 대한 콜백(<see cref="T:KLogger.Types.NoticeCompletePutDelegate"/>).
+            </param>
+            <param name="completePutNoticeType">
+            통지받을 처리 완료 결과 종류.
+            </param>
+        </member>
+        <member name="M:KLogger.KLoggerAPI.#ctor(KLogger.Configs.Config,KLogger.Types.NoticeCompletePutDelegate,KLogger.Types.CompletePutNoticeType)">
+            <summary>
+            <see cref="T:KLogger.Configs.Config"/> 부터 로거를 생성한다.
+            </summary>
+            <param name="config">
+            <see cref="M:KLogger.Configs.Config.Create(System.String)"/> 로 생성한 인스턴스.
+            </param>
+            <param name="noticeCompletePut">
+            처리 완료한 로그에 대한 콜백(<see cref="T:KLogger.Types.NoticeCompletePutDelegate"/>).
+            </param>
+            <param name="completePutNoticeType">
+            통지받을 결과 종류.
+            </param>
+        </member>
+        <member name="M:KLogger.KLoggerAPI.Start">
+            <summary>
+            로거를 시작한다. <see cref="F:KLogger.Types.StateType.Stop"/> 상태에서만 유효하다.
+            </summary>
+            <returns>
+            시작 결과(<see cref="T:KLogger.Types.StartResultType"/>).
+            </returns>
+        </member>
+        <member name="M:KLogger.KLoggerAPI.StartIfFailThrow">
+            <summary>
+            로거를 시작한다. 실패하면 예외(<see cref="T:KLogger.Cores.Exceptions.LoggerException"/>)를 발생시킨다.
+            </summary>
+        </member>
+        <member name="M:KLogger.KLoggerAPI.Stop">
+            <summary>
+            로거를 정지한다. <see cref="F:KLogger.Types.StateType.Start"/>, <see cref="F:KLogger.Types.StateType.Pause"/> 상태에서만 유효하다.
+            모든 스레드를 정지하고 큐에 남아있는 로그를 즉시 전송한다.
+            </summary>
+        </member>
+        <member name="M:KLogger.KLoggerAPI.Pause">
+            <summary>
+            로거를 일시정지한다. <see cref="F:KLogger.Types.StateType.Start"/> 상태에서만 유효하다.
+            로거의 모든 스레드는 살아있지만 더 이상 푸시를 할 수 없고, 큐에 있는 로그도 처리하지 않는다.
+            이미 전송을 시작한 로그와 재시도하고 있는 로그에는 영향을 주지 않는다.
+            <see cref="M:KLogger.KLoggerAPI.Resume"/> 으로 재개할 수 있다.
+            </summary>
+        </member>
+        <member name="M:KLogger.KLoggerAPI.Resume">
+            <summary>
+            로거를 재개한다. <see cref="F:KLogger.Types.StateType.Pause"/> 상태에서만 유효하다.
+            다시 푸시를 할 수 있고, 큐에 있는 로그를 처리하기 시작한다.
+            </summary>
+        </member>
+        <member name="M:KLogger.KLoggerAPI.Push(System.String,System.Object)">
+            <summary>
+            로그를 푸시한다
+            </summary>
+            <param name="type">
+            로그 타입으로 null 일 수 없다.
+            </param>
+            <param name="log">
+            로그 인스턴스로 null 일 수 없다. String 타입인 경우 <see cref="T:KLogger.Types.StringLogObject"/> 로 래핑된다.
+            </param>
+            <returns>
+            성공했으면 0 보다 큰 시퀀스 반환. 실패(무시포함)하면 -1 반환.
+            </returns>
+        </member>
+        <member name="M:KLogger.KLoggerAPI.PushJsonString(System.String,System.String)">
+            <summary>
+            JSON문자열인 로그를 푸시한다. JSON이 아니면 푸시에 실패한다.
+            </summary>
+            <param name="type">
+            로그 타입으로 null 일 수 없다.
+            </param>
+            <param name="jsonString">
+            JSON 형식의 문자열(String)로 null 일 수 없다.
+            </param>
+            <returns>
+            성공했으면 0 보다 큰 시퀀스 반환. 실패(무시포함)하면 -1 반환.
+            </returns>
+        </member>
+        <member name="M:KLogger.KLoggerAPI.ReportConfig">
+            <summary>
+            로거의 설정(<see cref="T:KLogger.Configs.Config"/>)을 <see cref="F:KLogger.Types.ReportLevelType.Info"/> 로 출력한다.
+            </summary>
+        </member>
+        <member name="M:KLogger.KLoggerAPI.ReportStatus">
+            <summary>
+            로거의 종합 상태를 <see cref="F:KLogger.Types.ReportLevelType.Info"/> 로 출력한다.
+            즉시 동작하지 않고 다음 모니터링 틱(<see cref="P:KLogger.Configs.Config.Watcher.IntervalMS"/>)이후에 출력하도록 예약한다.
+            </summary>
+        </member>
+        <member name="M:KLogger.KLoggerAPI.ReportLogTypeToCount">
+            <summary>
+            로그 타입별 개수를 <see cref="F:KLogger.Types.ReportLevelType.Info"/> 로 출력한다.
+            </summary>
+        </member>
+        <member name="M:KLogger.KLoggerAPI.ReportKinesisShardUsage">
+            <summary>
+            Kinesis Shard 당 사용량을 <see cref="F:KLogger.Types.ReportLevelType.Info"/> 로 출력한다.
+            </summary>
+        </member>
+        <member name="M:KLogger.KLoggerAPI.ResetError">
+            <summary>
+            로거의 모든(연속, 총합) 에러를 0으로 초기화한다.
+            </summary>
+        </member>
+        <member name="M:KLogger.KLoggerAPI.ResetLogTypeToCount">
+            <summary>
+            로그 타입별 개수를 0으로 초기화한다.
+            </summary>
+        </member>
+        <member name="M:KLogger.KLoggerAPI.EnableIgnoreLog(System.Boolean)">
+            <summary>
+            로그 타입별 무시 기능을 켜거나 끈다. 이전 상태를 무시한다.
+            </summary>
+            <param name="enable">
+            true면 켜고, false면 끈다.
+            </param>
+        </member>
+        <member name="M:KLogger.KLoggerAPI.AddIgnoreLogType(System.String)">
+            <summary>
+            무시할 로그 타입을 추가한다.
+            </summary>
+            <param name="logType">
+            추가할 로그 타입으로 소문자로 변환된다.
+            </param>
+        </member>
+        <member name="M:KLogger.KLoggerAPI.RemoveIgnoreLogType(System.String)">
+            <summary>
+            무시할 로그 타입을 제거한다.
+            </summary>
+            <param name="logType">
+            제거할 로그 타입으로 소문자로 변환된다.
+            </param>
+        </member>
+    </members>
+</doc>
