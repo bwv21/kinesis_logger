@@ -1,6 +1,7 @@
 ﻿"use strict";
 
 const zlib = require("zlib");
+const request = require("request-promise");
 
 /*
  * 극단적으로 압축된 데이터를 풀 때 문제가 있을 수 있다(거의 발생하지 않겠지만 적어 놓는다).
@@ -22,6 +23,8 @@ exports.handler = async (event) => {
     } catch (exception) {
         console.log(event);
         console.error("exception: ", exception);
+
+        await sendSlack("EXCEPTION", `\`\`\`${exception.stack}\`\`\``);
 
         return { records: null };
     }
@@ -57,4 +60,44 @@ function unzip(log) {
             }
         });
     });
+}
+
+async function sendSlack(title, text, color = "danger") {
+    function formattedNow() {
+        const date = new Date();
+        date.setHours(date.getHours() + 9);
+        const now = (date).toISOString().replace(/T/, " ").replace(/\..+/, "");
+        return now;
+    }
+
+    if (process.env.slack_webhook_url == null) {
+        console.error("there is no slack webhook url.");
+        return;
+    }
+
+    const options = {
+        method: "POST",
+        url: process.env.slack_webhook_url,
+        headers: {
+            'Content-Type': "application/json"
+        },
+        json: {
+            channel: process.env.slack_webhook_channel,
+            username: "KLogger Preprocessor Lambda",
+            icon_emoji: ":ddo_bug_ne:",
+            attachments: [
+                {
+                    "title": title,
+                    "text": text,
+                    "footer": `\`${formattedNow()}\``,
+                    "mrkdwn": true
+                }
+            ]
+        }
+    };
+
+    const res = await request.post(options);
+    if (res !== "ok") {
+        console.error("Fail Send Slack. Result: ", res);
+    }
 }

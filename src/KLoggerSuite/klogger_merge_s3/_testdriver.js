@@ -2,7 +2,9 @@
 
 process.env["aws_region"] = "ap-northeast-2";
 process.env["is_local"] = 1;
-process.env["bucket_name"] = "klogger-dev.s3.dh-devcat.studio";
+process.env["bucket_name"] = "bucket";
+process.env["slack_webhook_url"] = "https://hooks.slack.com/services/...";
+process.env["slack_webhook_channel"] = "z_klogger_test";
 
 const fs = require("fs");
 const app = require("./app");

@@ -9,6 +9,7 @@ if (process.env.is_local != null) {
 
 const s3 = new AWS.S3();
 const crypto = require("crypto");
+const request = require("request-promise");
 
 const MB_5 = 5242880;            // S3상에서 머지(멀티파트업로드)가 가능한 최소 크기(5MB).
 const MB_LARGE = MB_5 * 20;      // 최종 머지할 크기(100M 이상~).
@@ -38,6 +39,7 @@ exports.handler = async (event) => {
     } catch (exception) {
         console.error("=================== exception beg ===================");
         console.error(exception);
+        await sendSlack("EXCEPTION", `\`\`\`${exception.stack}\`\`\``);
         console.error("=================== exception end ===================");
     }
 
@@ -324,4 +326,44 @@ async function mergeOnS3Bundle(bundle) {
     }
 
     return bundle;
+}
+
+async function sendSlack(title, text, color = "danger") {
+    function formattedNow() {
+        const date = new Date();
+        date.setHours(date.getHours() + 9);
+        const now = (date).toISOString().replace(/T/, " ").replace(/\..+/, "");
+        return now;
+    }
+
+    if (process.env.slack_webhook_url == null) {
+        console.error("there is no slack webhook url.");
+        return;
+    }
+
+    const options = {
+        method: "POST",
+        url: process.env.slack_webhook_url,
+        headers: {
+            'Content-Type': "application/json"
+        },
+        json: {
+            channel: process.env.slack_webhook_channel,
+            username: "KLogger Merge Lambda",
+            icon_emoji: ":ddo_bug_ne:",
+            attachments: [
+                {
+                    "title": title,
+                    "text": text,
+                    "footer": `\`${formattedNow()}\``,
+                    "mrkdwn": true
+                }
+            ]
+        }
+    };
+
+    const res = await request.post(options);
+    if (res !== "ok") {
+        console.error("Fail Send Slack. Result: ", res);
+    }
 }
