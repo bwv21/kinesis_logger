@@ -23,10 +23,12 @@
     + 로그 처리의 최종 성공 또는 실패를 알려준다
 + [Preprocessor Lambda](/src/KLoggerSuite/klogger_preprocessor)
   + 필수는 아니다
+  + Firehose 설정에서 Record transformation 을 Enable 하고 전처리 Lambda 를 지정한다
   + 로그 압축을 사용하려면 해당 Lambda 가 필요하다
   + 로그가 압축되어 있으면, Firehose 로 보내기 전에 압축을 푼다
 + [Merge Lambda](/src/KLoggerSuite/klogger_merge_s3)
   + 필수는 아니다
+  + 해당 기능 대신, Firehose S3 compression 사용도 고려한다
   + S3 에 있는 파일들이 작게 쪼개져 있으면, Athena 와 같은 분석 시스템에서 효율이 떨어진다
   + S3 에 있는 파일들을 묶어서 큰 파일로 만든다
   + 5MB 이하의 파일은 S3 상에서 머지가 불가능하므로 다운받아서 병합하고 업로드 한다
