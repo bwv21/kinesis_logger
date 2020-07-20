@@ -7,8 +7,8 @@
     "name": "bwv21"
   },
   "dependencies": {
-    "aws-sdk": "^2.489.0",
-    "request": "^2.88.0",
+    "aws-sdk": "^2.715.0",
+    "request": "^2.88.2",
     "request-promise": "^4.2.5"
   }
 }
