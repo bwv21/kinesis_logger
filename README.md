@@ -19,21 +19,20 @@
     + [Batch API](https://docs.aws.amazon.com/ko_kr/kinesis/latest/APIReference/API_PutRecords.html) 를 사용한다
   + 샤드 개수를 조회하여 처리할 수 있는 만큼만 전송한다
     + 테스트 결과, 처리량 이상을 보내먼서 재전송하는 것보다 조절해서 보내는 쪽의 성능이 더 좋았다
-  + 로그가 일정 크기 이상이면 압축을 한다
-    + 압축 기능을 사용하려면 압축을 해제할 Preprocessor 가 필요하다
-  + 통신 오류나 용량 초과와 같은 오류가 발생했을 때 일정 횟수 동안 재전송을 시도한다
-    + 일정 횟수를 초과하면 로그를 버린다
-  + 로그 처리의 최종 성공 또는 실패를 콜백 함수로 알려준다
-    + 성공 또는 실패한 로그의 알림만 받을 수도 있다
+  + 로그가 일정 크기 이상이면 압축한다
+    + 압축 기능을 사용하려면 압축을 해제할 [Preprocessor](/src/KLoggerSuite/klogger_preprocessor)가 필요하다
+  + 통신 오류나 용량 초과와 같은 오류가 발생했을 때는 일정 횟수만 재전송을 시도한다
+    + 재시도 횟수를 초과하면 로그를 버린다
+  + 로그 처리의 최종 성공 또는 실패를 콜백 함수로 알린다
+    + 성공 또는 실패한 로그의 알림만 받을 수 있다
 + [Preprocessor Lambda](/src/KLoggerSuite/klogger_preprocessor)
-  + 필수가 아니다
-  + Firehose 설정에서 Record transformation 을 Enable 하고 전처리 Lambda 를 지정한다
-  + 로그 압축을 사용하려면 해당 Lambda 가 필요하다
-  + 로그가 압축되어 있으면, Firehose 로 보내기 전에 압축을 푼다
+  + 필수가 아니고, 로거의 압축을 사용하는 경우 필요하다
+  + Firehose 에서 Record transformation 을 Enable 하고 전처리 Lambda 를 지정한다
+  + 들어온 로그가 압축되어 있으면 Firehose 로 넘기기 전에 압축을 푼다
 + [Merge Lambda](/src/KLoggerSuite/klogger_merge_s3)
   + 필수가 아니다
-  + 해당 기능 대신, Firehose S3 compression 사용도 고려한다
-  + S3 에 있는 파일들이 작게 쪼개져 있으면, Athena 와 같은 분석 시스템에서 효율이 떨어진다
+  + 해당 기능 대신, Firehose S3 compression 사용을 고려한다
+  + S3 에 있는 파일들이 작게 쪼개져 있으면 Athena 와 같은 분석 시스템에서 효율이 떨어진다
   + S3 에 있는 파일들을 묶어서 큰 파일로 만든다
   + 5MB 이하의 파일은 S3 상에서 머지가 불가능하므로 다운로드해서 병합하고 업로드한다
   + 5MB 이상의 파일은 S3 의 멀티파트 업로드를 사용하여 S3 상에서 병합한다
