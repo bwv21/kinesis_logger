@@ -26,16 +26,16 @@
   + 로그 처리의 최종 성공 또는 실패를 콜백 함수로 알린다
     + 성공 또는 실패한 로그의 알림만 받을 수 있다
 + [Preprocessor Lambda](/src/KLoggerSuite/klogger_preprocessor)
-  + 필수가 아니고, 로거의 압축을 사용하는 경우 필요하다
+  + 필수가 아니고 로거의 압축을 사용하는 경우에 필요하다
   + Firehose 에서 Record transformation 을 Enable 하고 전처리 Lambda 를 지정한다
   + 들어온 로그가 압축되어 있으면 Firehose 로 넘기기 전에 압축을 푼다
+  + 이후 다른 전처리 로직을 넣을 수도 있다
 + [Merge Lambda](/src/KLoggerSuite/klogger_merge_s3)
   + 필수가 아니다
-  + 해당 기능 대신, Firehose S3 compression 사용을 고려한다
-  + S3 에 있는 파일들이 작게 쪼개져 있으면 Athena 와 같은 분석 시스템에서 효율이 떨어진다
+  + Firehose S3 compression 사용을 고려한다
+  + S3 에 있는 파일들이 작게 쪼개져 있으면 Athena 와 같은 분석 시스템에서 효율이 떨어질 수 있다
   + S3 에 있는 파일들을 묶어서 큰 파일로 만든다
-  + 5MB 이하의 파일은 S3 상에서 머지가 불가능하므로 다운로드해서 병합하고 업로드한다
-  + 5MB 이상의 파일은 S3 의 멀티파트 업로드를 사용하여 S3 상에서 병합한다
-    + 병합 시간이 빠르다
+    + 5MB 이하의 파일은 S3 상에서 머지가 불가능하므로 다운로드해서 병합하고 업로드한다
+    + 5MB 이상의 파일은 S3 의 [멀티파트 업로드](https://docs.aws.amazon.com/ko_kr/AmazonS3/latest/dev/mpuoverview.html)를 사용하여 S3 상에서 빠르게 병합한다
   + CloudWatch 로 주기적으로 호출한다
     + 여러 번 호출해도 무해하게 구현한다
