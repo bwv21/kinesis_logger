@@ -1,6 +1,6 @@
 # Kinesis Logger
 
-[Kinesis](https://aws.amazon.com/ko/kinesis) 를 이용한 로그 수집기
+[Kinesis](https://aws.amazon.com/ko/kinesis)를 이용한 로그 수집기
 
 ## 구조
 
@@ -33,9 +33,9 @@
 + [Merge Lambda](/src/KLoggerSuite/klogger_merge_s3)
   + 필수가 아니다
   + Firehose S3 compression 사용을 고려한다
-  + S3 에 있는 파일들이 작게 쪼개져 있으면 Athena와 같은 시스템에서 효율이 떨어질 수 있다
-  + S3 에 있는 파일들을 묶어서 큰 파일로 만든다
+  + S3에 있는 파일들이 작게 쪼개져 있으면 Athena와 같은 시스템에서 효율이 떨어질 수 있다
+  + S3에 있는 파일들을 묶어서 큰 파일로 만든다
     + 5MB 이하의 파일은 다운로드 후 병합하여 업로드한다
-    + 5MB 이상의 파일은 [멀티파트 업로드](https://docs.aws.amazon.com/ko_kr/AmazonS3/latest/dev/mpuoverview.html)를 사용하여 S3 상에서 빠르게 병합한다
-  + CloudWatch 로 주기적으로 호출한다
+    + 5MB 이상의 파일은 [멀티파트 업로드](https://docs.aws.amazon.com/ko_kr/AmazonS3/latest/dev/mpuoverview.html)를 사용하여 S3상에서 빠르게 병합한다
+  + CloudWatch로 주기적으로 호출한다
     + 람다를 여러 번 호출해도 무해하게 구현한다
